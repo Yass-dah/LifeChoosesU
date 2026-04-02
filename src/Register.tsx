@@ -1,6 +1,10 @@
 import './App.css'
 
-export function Register(){
+type Props = {
+    setPage: (page: string) => void;
+}
+
+export function Register(setter: Props){
     return (
         <div className="register-container">
             <div className="register-box box">
@@ -48,7 +52,8 @@ export function Register(){
                     </div>
                 </div>
                 <p className="has-text-centered mt-3">
-                    Hai già un account? <a href="#">Accedi</a>
+                    Hai già un account?
+                    <a href="#" onClick={() => setter.setPage("login")}>Accedi</a>
                 </p>
             </div>
         </div>

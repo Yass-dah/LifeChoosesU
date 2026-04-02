@@ -1,6 +1,10 @@
 import './App.tsx'
 
-export function Login(){
+type Props = {
+    setPage: (page: string) => void;
+}
+
+export function Login(setter: Props){
     return (
         <div className="login-container">
             <div className="login-box box">
@@ -34,7 +38,8 @@ export function Login(){
                     </div>
                 </div>
                 <p className="has-text-centered mt-3">
-                    Non hai un account? <a href="#">Registrati</a>
+                    Non hai un account?
+                    <a href="#" onClick={() => setter.setPage("register")}>Registrati</a>
                 </p>
             </div>
         </div>
