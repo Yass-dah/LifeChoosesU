@@ -14,7 +14,7 @@ export function Explore(){
                         <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                         </div>
                         <div className="country-image">
-                            <img src="/Italia.jpg" alt="Italia" />
+                            <img src="/countries/Italia.jpg" alt="Italia" />
                         </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Ucraina.jpg" alt="Ucraina" />
+                                <img src="/countries/Ucraina.jpg" alt="Ucraina" />
                             </div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Palestina.jpg" alt="Palestina" />
+                                <img src="/countries/Palestina.jpg" alt="Palestina" />
                             </div>
                         </div>
                     </div>
@@ -59,7 +59,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Libano.jpg" alt="Libano" />
+                                <img src="/countries/Libano.jpg" alt="Libano" />
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Siria.jpg" alt="Siria" />
+                                <img src="/countries/Siria.jpg" alt="Siria" />
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Sudan.jpg" alt="Sudan" />
+                                <img src="/countries/Sudan.jpg" alt="Sudan" />
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Afghanistan.jpg" alt="Afghanistan" />
+                                <img src="/countries/Afghanistan.jpg" alt="Afghanistan" />
                             </div>
                         </div>
                     </div>
@@ -119,7 +119,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Iran.jpg" alt="Iran" />
+                                <img src="/countries/Iran.jpg" alt="Iran" />
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Yemen.jpg" alt="Yemen" />
+                                <img src="/countries/Yemen.jpg" alt="Yemen" />
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Cuba.jpg" alt="Cuba" />
+                                <img src="/countries/Cuba.jpg" alt="Cuba" />
                             </div>
                         </div>
                     </div>
@@ -164,7 +164,7 @@ export function Explore(){
                                 <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
                             </div>
                             <div className="country-image">
-                                <img src="/Libia.jpg" alt="Libia" />
+                                <img src="/countries/Libia.jpg" alt="Libia" />
                             </div>
                         </div>
                     </div>

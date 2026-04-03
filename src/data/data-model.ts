@@ -123,4 +123,13 @@ export class ConflictModel {
         }
         return false;
     }
+
+    addAnswer(requestId: number, answer: string, mediator: number){
+        const request = this.requests[requestId];
+        if(request !== undefined){
+            if(request.mediatorId === mediator && request.status === "IN GESTIONE") {
+                this.requests[requestId].aidAnswer = answer;
+            }
+        }
+    }
 }
