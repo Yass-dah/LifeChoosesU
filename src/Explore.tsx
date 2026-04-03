@@ -4,6 +4,20 @@ export function Explore(){
     return (
 
         <div className="explore-container container mt-5">
+            <div className="box mb-4">
+                <div className="columns is-multiline">
+                    <div className="column is-4">
+                        <label className="label">Raggruppa per</label>
+                        <div className="select is-fullwidth">
+                            <select>
+                                <option>Paese</option>
+                                <option>Tipo</option>
+                                <option>Urgenza</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="columns is-multiline">
                 <div className="column is-half">
                     <div className="country-card box">

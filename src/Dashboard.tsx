@@ -1,4 +1,5 @@
 import './App.css'
+import { conflictModel } from "./data/data.ts";
 
 export function Dashboard(){
     return (
@@ -53,7 +54,7 @@ export function Dashboard(){
             <div className="columns is-multiline">
                 <div className="column is-half">
                     <div className="box conflict-card urgent">
-                        <h3 className="title is-5">Conflitto familiare</h3>
+                        <h3 className="title is-5">{ conflictModel.getRequest(101)?.description }</h3>
 
                         <span className="tag is-danger mb-2">Alta urgenza</span>
 
