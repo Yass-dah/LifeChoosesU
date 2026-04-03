@@ -2,7 +2,6 @@ import './App.css'
 
 export function Dashboard(){
     return (
-
         <div className="container mt-5">
             <h1 className="title">Dashboard Mediatore</h1>
             <div className="box mb-4">
@@ -36,14 +35,13 @@ export function Dashboard(){
                     </div>
                     <div className="column is-4">
                         <label className="label">Visualizza</label>
-
                         <div className="control">
                             <label className="radio mr-3">
-                                <input type="radio" name="filter" checked/>
+                                <input className="mr-2" type="radio" name="filter" checked/>
                                 Tutte
                             </label>
                             <label className="radio">
-                                <input type="radio" name="filter"/>
+                                <input className="mr-2" type="radio" name="filter"/>
                                 Solo le mie mediazioni
                             </label>
                         </div>

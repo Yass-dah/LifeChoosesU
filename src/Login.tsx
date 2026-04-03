@@ -39,7 +39,7 @@ export function Login(setter: Props){
                 </div>
                 <p className="has-text-centered mt-3">
                     Non hai un account?
-                    <a href="#" onClick={() => setter.setPage("register")}>Registrati</a>
+                    <a href="#" onClick={() => setter.setPage("register")}> Registrati</a>
                 </p>
             </div>
         </div>

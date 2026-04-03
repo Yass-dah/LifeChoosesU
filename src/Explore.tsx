@@ -7,79 +7,166 @@ export function Explore(){
             <div className="columns is-multiline">
                 <div className="column is-half">
                     <div className="country-card box">
+                        <div className="country-content">
+                            <div className="country-info">
                         <h3 className="title is-5">Italia 🇮🇹</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
+                        <p>Conflitti sociali e episodi di bullismo</p>
                         <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        </div>
+                        <div className="country-image">
+                            <img src="/public/italia.jpg" alt="Italia" />
+                        </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Ucraina 🇺🇦</h3>
-                        <p>Conflitto armato in corso</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Ucraina 🇺🇦</h3>
+                                <p>Conflitto armato in corso </p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/ucraina.jpg" alt="Ucraina" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Palestina 🇵🇸</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Palestina 🇵🇸</h3>
+                                <p>Conflitti sociali e tensioni</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/palestina.jpg" alt="Palestina" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Libano 🇱🇧</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Libano 🇱🇧</h3>
+                                <p>Conflitti armati e bombardamenti</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/libano.jpg" alt="Libano" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Siria 🇸🇾</h3>
-                        <p>Guerra civile e crisi umanitaria</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Siria 🇸🇾</h3>
+                                <p>Guerra civile</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/siria.jpg" alt="Siria" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Sudan 🇸🇩</h3>
-                        <p>Conflitti interni e instabilità</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Sudan 🇸🇩</h3>
+                                <p>Conflitti armati e violenze sessuali</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/sudan.jpg" alt="Sudan" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Afghanistan 🇦🇫</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Afghanistan 🇦🇫</h3>
+                                <p>Fenomeni atmosferici e resistenza donne</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/afghanistan.jpg" alt="Afghanistan" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Iran 🇮🇷</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Iran 🇮🇷</h3>
+                                <p>Conflitti sociali e bombardamenti</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/iran.jpg" alt="Iran" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Yemen 🇾🇪</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Yemen 🇾🇪</h3>
+                                <p>Conflitti armati e bombardamenti</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/yemen.jpg" alt="Yemen" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Cuba 🇨🇺</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Cuba 🇨🇺</h3>
+                                <p>Conflitti sociali e crisi umanitaria</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/cuba.jpg" alt="Cuba" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div className="column is-half">
                     <div className="country-card box">
-                        <h3 className="title is-5">Libia 🇱🇾</h3>
-                        <p>Conflitti sociali e tensioni locali</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h3 className="title is-5">Libia 🇱🇾</h3>
+                                <p>Crisi umanitaria profughi</p>
+                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                            </div>
+                            <div className="country-image">
+                                <img src="/public/libia.jpg" alt="Libia" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

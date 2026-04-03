@@ -53,7 +53,7 @@ export function Register(setter: Props){
                 </div>
                 <p className="has-text-centered mt-3">
                     Hai già un account?
-                    <a href="#" onClick={() => setter.setPage("login")}>Accedi</a>
+                    <a href="#" onClick={() => setter.setPage("login")}> Accedi</a>
                 </p>
             </div>
         </div>
