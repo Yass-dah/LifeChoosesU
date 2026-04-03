@@ -14,6 +14,8 @@ export function Dashboard(){
                                 <option>Familiare</option>
                                 <option>Scolastico</option>
                                 <option>Lavorativo</option>
+                                <option>Sociale</option>
+                                <option>Altro</option>
                             </select>
                         </div>
                     </div>
