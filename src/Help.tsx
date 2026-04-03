@@ -18,7 +18,6 @@ export function Help(){
                 <h3 className="subtitle">Azioni mediatore</h3>
                 <div className="buttons">
                     <button className="button is-primary">Prendi in carico</button>
-                    <button className="button is-warning">Segna come in gestione</button>
                     <button className="button is-success">Risolto</button>
                 </div>
                 <div className="field mt-4">
