@@ -1,22 +1,47 @@
 import './App.css'
 
-export function Explore(){
+function FilterBox(){
     return (
-        <div className="explore-container container mt-5">
-            <div className="box mb-4">
-                <div className="columns is-multiline">
-                    <div className="column is-4">
-                        <label className="label">Raggruppa per</label>
-                        <div className="select is-fullwidth">
-                            <select>
-                                <option>Paese</option>
-                                <option>Tipo</option>
-                                <option>Urgenza</option>
-                            </select>
-                        </div>
+        <div className="box mb-4">
+            <div className="columns is-multiline">
+                <div className="column is-4">
+                    <label className="label">Raggruppa per</label>
+                    <div className="select is-fullwidth">
+                        <select>
+                            <option>Paese</option>
+                            <option>Tipo</option>
+                            <option>Urgenza</option>
+                        </select>
                     </div>
                 </div>
             </div>
+        </div>
+    )
+}
+/*
+function CountryCard(){
+    return (
+        <div className="column is-half">
+            <div className="country-card box">
+                <div className="country-content">
+                    <div className="country-info">
+                        <h3 className="title is-5">Italia 🇮🇹</h3>
+                        <p>Conflitti sociali e episodi di bullismo</p>
+                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                    </div>
+                    <div className="country-image">
+                        <img src="/countries/Italia.jpg" alt="Italia" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+*/
+export function Explore(){
+    return (
+        <div className="explore-container container mt-5">
+            <FilterBox/>
             <div className="columns is-multiline">
                 <div className="column is-half">
                     <div className="country-card box">

@@ -1,20 +1,25 @@
 import './App.css'
 
+function StepCard(action: string, description: string){
+    return (
+        <div className="step-card">
+            <h3>{ action }</h3>
+            <p>{ description }</p>
+        </div>
+    )
+}
+
 export function Steps(){
+    const steps = [];
+    steps.push(StepCard("Segnala un conflitto",
+        "Racconta la situazione in sicurezza e anonimato"));
+    steps.push(StepCard("Ricevi supporto",
+        "I mediatori risponderanno e guideranno la mediazione"));
+    steps.push(StepCard("Risolvi il conflitto",
+        "Collabora con i mediatori per una soluzione pacifica"));
     return (
         <section className="steps">
-            <div className="step-card">
-                <h3>Segnala un conflitto</h3>
-                <p>Racconta la situazione in sicurezza e anonimato</p>
-            </div>
-            <div className="step-card">
-                <h3>Ricevi supporto</h3>
-                <p>I mediatori risponderanno e guideranno la mediazione</p>
-            </div>
-            <div className="step-card">
-                <h3>Risolvi il conflitto</h3>
-                <p>Collabora con i mediatori per una soluzione pacifica</p>
-            </div>
+            { steps }
         </section>
     )
 }
