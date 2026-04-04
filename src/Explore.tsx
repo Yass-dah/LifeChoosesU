@@ -2,7 +2,6 @@ import './App.css'
 
 export function Explore(){
     return (
-
         <div className="explore-container container mt-5">
             <div className="box mb-4">
                 <div className="columns is-multiline">
