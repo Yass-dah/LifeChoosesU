@@ -1,16 +1,12 @@
 import './App.css'
 import { getFlag } from "./data/countries.ts";
+import { getUrgColor } from "./data/types.ts";
 import { conflictModel } from "./data/data.ts";
 import type { HelpRequest } from "./data/data-model.ts";
 
 function ConflictCard(request: HelpRequest) {
-    let urgColor = "is-white";
-    if(request.urgency === "MEDIA")
-        urgColor = "is-warning";
-    else if(request.urgency === "ALTA")
-        urgColor = "is-danger";
     const urgClass = ["tag","mb-2"];
-    urgClass.push(urgColor);
+    urgClass.push(getUrgColor(request.urgency));
     return (
         <div className="box conflict-card urgent">
             <h3 className="title is-5">{ request.title }</h3>
@@ -65,7 +61,7 @@ function FilterBox(){
                             Tutte
                         </label>
                         <label className="radio">
-                            <input className="mr-2" type="radio" name="filter"/>
+                            <input className="mr-2" type="radio" name="filter" checked/>
                             Solo le mie mediazioni
                         </label>
                     </div>

@@ -1,4 +1,4 @@
-import {type ConflictType, type UrgencyLevel, type ConflictStatus} from "./enums.ts";
+import {type ConflictType, type UrgencyLevel, type ConflictStatus} from "./types.ts";
 import {type Country} from "./countries.ts";
 
 export interface User {
