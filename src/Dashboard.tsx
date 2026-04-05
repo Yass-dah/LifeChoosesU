@@ -4,7 +4,7 @@ import { getUrgColor } from "./data/types.ts";
 import { conflictModel } from "./data/data.ts";
 import type { HelpRequest } from "./data/data-model.ts";
 
-function ConflictCard(request: HelpRequest) {
+function ConflictCard({request}: { request: HelpRequest }) {
     const urgClass = ["tag","mb-2"];
     urgClass.push(getUrgColor(request.urgency));
     return (
@@ -74,10 +74,10 @@ function FilterBox(){
 
 export function Dashboard(){
     const cards = [];
-    for(const request of conflictModel.getAllRequests()) {
+    for(const req of conflictModel.getAllRequests()) {
         cards.push(
             <div className="column is-half">
-                { ConflictCard(request) }
+                { <ConflictCard request={req}/> }
             </div>
         );
     }

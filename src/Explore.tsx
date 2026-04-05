@@ -1,16 +1,32 @@
 import './App.css'
 
-function FilterBox(){
+import { type Country, getFlag } from "./data/countries.ts";
+import { type ConflictType, type UrgencyLevel } from "./data/types.ts";
+
+import { useState } from "react";
+import * as React from "react";
+
+type categories = "country" | "type" | "urgency";
+
+type groupProp = {
+    setGroup: (group: categories) => void
+}
+
+function FilterBox(setter: groupProp){
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setter.setGroup(e.target.value as categories);
+    };
+
     return (
         <div className="box mb-4">
             <div className="columns is-multiline">
                 <div className="column is-4">
                     <label className="label">Raggruppa per</label>
                     <div className="select is-fullwidth">
-                        <select>
-                            <option>Paese</option>
-                            <option>Tipo</option>
-                            <option>Urgenza</option>
+                        <select onChange={ handleChange } defaultValue="country">
+                            <option value="country">Paese</option>
+                            <option value="type">Tipo</option>
+                            <option value="urgency">Urgenza</option>
                         </select>
                     </div>
                 </div>
@@ -18,195 +34,95 @@ function FilterBox(){
         </div>
     )
 }
-/*
-function CountryCard(){
+
+function CountryCard({country}: { country: Country }){
     return (
         <div className="column is-half">
             <div className="country-card box">
                 <div className="country-content">
                     <div className="country-info">
-                        <h3 className="title is-5">Italia 🇮🇹</h3>
+                        <h3 className="title is-5">{ country + " " + getFlag(country) }</h3>
                         <p>Conflitti sociali e episodi di bullismo</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
+                        <button className="button is-light mt-3">Visualizza dettagli</button>
                     </div>
                     <div className="country-image">
-                        <img src="/countries/Italia.jpg" alt="Italia" />
+                        <img src={`/countries/${country}.jpg`} alt={ country } />
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-*/
+
+function TypeCard({type}: { type: ConflictType }){
+    return (
+        <div className="column is-half">
+            <div className="type-card box">
+                <div className="type-content">
+                    <div className="type-info">
+                        <h3 className="title is-5">{ type }</h3>
+                        <p>Conflitti sociali e episodi di bullismo</p>
+                        <button className="button is-light mt-3">Visualizza dettagli</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function UrgencyCard({urgency}: { urgency: UrgencyLevel }){
+    return (
+        <div className="column is-half">
+            <div className="urgency-card box">
+                <div className="urgency-content">
+                    <div className="urgency-info">
+                        <h3 className="title is-5">{ urgency }</h3>
+                        <p>Conflitti sociali e episodi di bullismo</p>
+                        <button className="button is-light mt-3">Visualizza dettagli</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function getCards(category: categories){
+    const mainContent = [];
+    if(category === "country"){
+        mainContent.push(<CountryCard country={"Italia"}/>);
+        mainContent.push(<CountryCard country={"Ucraina"}/>);
+        mainContent.push(<CountryCard country={"Palestina"}/>);
+        mainContent.push(<CountryCard country={"Libano"}/>);
+        mainContent.push(<CountryCard country={"Siria"}/>);
+        mainContent.push(<CountryCard country={"Sudan"}/>);
+        mainContent.push(<CountryCard country={"Afghanistan"}/>);
+        mainContent.push(<CountryCard country={"Iran"}/>);
+        mainContent.push(<CountryCard country={"Yemen"}/>);
+        mainContent.push(<CountryCard country={"Libia"}/>);
+        mainContent.push(<CountryCard country={"Cuba"}/>);
+    }
+    else if(category === "type"){
+        mainContent.push(<TypeCard type={"FAMILIARE"}/>);
+        mainContent.push(<TypeCard type={"SCOLASTICO"}/>);
+        mainContent.push(<TypeCard type={"LAVORATIVO"}/>);
+        mainContent.push(<TypeCard type={"SOCIALE"}/>);
+        mainContent.push(<TypeCard type={"ALTRO"}/>);
+    }
+    else if(category === "urgency"){
+        mainContent.push(<UrgencyCard urgency={"BASSA"}/>)
+        mainContent.push(<UrgencyCard urgency={"MEDIA"}/>)
+        mainContent.push(<UrgencyCard urgency={"ALTA"}/>);
+    }
+    return mainContent;
+}
+
 export function Explore(){
+    const [group, setGroup] = useState<categories>("country");
     return (
         <div className="explore-container container mt-5">
-            <FilterBox/>
+            <FilterBox setGroup={ setGroup }/>
             <div className="columns is-multiline">
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                        <h3 className="title is-5">Italia 🇮🇹</h3>
-                        <p>Conflitti sociali e episodi di bullismo</p>
-                        <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                        </div>
-                        <div className="country-image">
-                            <img src="/countries/Italia.jpg" alt="Italia" />
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Ucraina 🇺🇦</h3>
-                                <p>Conflitto armato in corso </p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Ucraina.jpg" alt="Ucraina" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Palestina 🇵🇸</h3>
-                                <p>Conflitti sociali e tensioni</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Palestina.jpg" alt="Palestina" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Libano 🇱🇧</h3>
-                                <p>Conflitti armati e bombardamenti</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Libano.jpg" alt="Libano" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Siria 🇸🇾</h3>
-                                <p>Guerra civile</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Siria.jpg" alt="Siria" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Sudan 🇸🇩</h3>
-                                <p>Conflitti armati e violenze sessuali</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Sudan.jpg" alt="Sudan" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Afghanistan 🇦🇫</h3>
-                                <p>Fenomeni atmosferici e resistenza donne</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Afghanistan.jpg" alt="Afghanistan" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Iran 🇮🇷</h3>
-                                <p>Conflitti sociali e bombardamenti</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Iran.jpg" alt="Iran" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Yemen 🇾🇪</h3>
-                                <p>Conflitti armati e bombardamenti</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Yemen.jpg" alt="Yemen" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Cuba 🇨🇺</h3>
-                                <p>Conflitti sociali e crisi umanitaria</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Cuba.jpg" alt="Cuba" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column is-half">
-                    <div className="country-card box">
-                        <div className="country-content">
-                            <div className="country-info">
-                                <h3 className="title is-5">Libia 🇱🇾</h3>
-                                <p>Crisi umanitaria profughi</p>
-                                <button className="button is-danger is-light mt-3">Visualizza dettagli</button>
-                            </div>
-                            <div className="country-image">
-                                <img src="/countries/Libia.jpg" alt="Libia" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                { getCards(group) }
             </div>
         </div>
     )
