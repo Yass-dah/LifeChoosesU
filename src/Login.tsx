@@ -14,8 +14,8 @@ export function Login(setter: Props){
                     <div className="control">
                         <div className="select is-fullwidth">
                             <select>
-                                <option>Richiedente supporto</option>
-                                <option>Mediatore</option>
+                                <option value="requester">Richiedente supporto</option>
+                                <option value="mediator">Mediatore</option>
                             </select>
                         </div>
                     </div>
@@ -39,7 +39,7 @@ export function Login(setter: Props){
                 </div>
                 <p className="has-text-centered mt-3">
                     Non hai un account?
-                    <a href="#" onClick={() => setter.setPage("register")}> Registrati</a>
+                    <a href="" onClick={() => setter.setPage("register")}> Registrati</a>
                 </p>
             </div>
         </div>

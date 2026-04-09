@@ -98,11 +98,15 @@
   margin-top: 3vh;
 }
 
-.country-card {
+.explore-container {
+  margin-bottom: 10vh;
+}
+
+.country-card, .type-card, .urgency-card {
   height: 180px;
 }
 
-.country-content {
+.country-content, .type-card, .urgency-card {
   display: flex;
   gap: 12vh;
   height: 100%;
@@ -126,6 +130,12 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.conflict-card.disabled {
+  position: relative;
+  opacity: 0.5;
+  filter: grayscale(100%);
 }
 
 footer {

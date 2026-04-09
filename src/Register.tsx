@@ -38,8 +38,8 @@ export function Register(setter: Props){
                     <div className="control">
                         <div className="select is-fullwidth">
                             <select>
-                                <option>Richiedente supporto</option>
-                                <option>Mediatore</option>
+                                <option value="requester">Richiedente supporto</option>
+                                <option value="mediator">Mediatore</option>
                             </select>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ export function Register(setter: Props){
                 </div>
                 <p className="has-text-centered mt-3">
                     Hai già un account?
-                    <a href="#" onClick={() => setter.setPage("login")}> Accedi</a>
+                    <a href="" onClick={() => setter.setPage("login")}> Accedi</a>
                 </p>
             </div>
         </div>

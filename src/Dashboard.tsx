@@ -4,16 +4,18 @@ import { getUrgColor } from "./data/types.ts";
 import { conflictModel } from "./data/data.ts";
 import type { HelpRequest } from "./data/data-model.ts";
 
-function ConflictCard({request}: { request: HelpRequest }) {
+function ConflictCard({request}: { request: HelpRequest }){
     const urgClass = ["tag","mb-2"];
     urgClass.push(getUrgColor(request.urgency));
+    const reqDone = (request.status === "IN GESTIONE" || request.status === "RISOLTO");
+    const chosable = reqDone ? "disabled" : "";
     return (
-        <div className="box conflict-card urgent">
+        <div className={"box conflict-card urgent " + chosable}>
             <h3 className="title is-5">{ request.title }</h3>
             <span className={ urgClass.join(" ") }>{ request.urgency } URGENZA</span>
             <p><strong>Luogo:</strong> { request.location + " " + getFlag(request.country) }</p>
             <p className="mt-2">{ request.description }</p>
-            <button className="button is-link is-light mt-3">
+            <button className="button is-link is-light mt-3" disabled={reqDone}>
                 Intervieni
             </button>
         </div>

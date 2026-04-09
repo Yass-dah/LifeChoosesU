@@ -1,7 +1,7 @@
 import './App.css'
 
 import { type Country, getFlag } from "./data/countries.ts";
-import { type ConflictType, type UrgencyLevel } from "./data/types.ts";
+import { type ConflictType, type UrgencyLevel, getUrgColor } from "./data/types.ts";
 
 import { useState } from "react";
 import * as React from "react";
@@ -73,12 +73,13 @@ function TypeCard({type}: { type: ConflictType }){
 function UrgencyCard({urgency}: { urgency: UrgencyLevel }){
     return (
         <div className="column is-half">
-            <div className="urgency-card box">
+            <div className="urgency-card box ">
                 <div className="urgency-content">
-                    <div className="urgency-info">
+                    <div className="urgency-info ">
                         <h3 className="title is-5">{ urgency }</h3>
                         <p>Conflitti sociali e episodi di bullismo</p>
-                        <button className="button is-light mt-3">Visualizza dettagli</button>
+                        <button className={"button is-light mt-3 " + getUrgColor(urgency)}>
+                            Visualizza dettagli</button>
                     </div>
                 </div>
             </div>
@@ -109,9 +110,9 @@ function getCards(category: categories){
         mainContent.push(<TypeCard type={"ALTRO"}/>);
     }
     else if(category === "urgency"){
-        mainContent.push(<UrgencyCard urgency={"BASSA"}/>)
+        mainContent.push(<UrgencyCard urgency={"ALTA"}/>)
         mainContent.push(<UrgencyCard urgency={"MEDIA"}/>)
-        mainContent.push(<UrgencyCard urgency={"ALTA"}/>);
+        mainContent.push(<UrgencyCard urgency={"BASSA"}/>);
     }
     return mainContent;
 }

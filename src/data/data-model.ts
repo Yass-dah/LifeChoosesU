@@ -11,7 +11,7 @@ export interface User {
 export interface HelpRequest {
     id: number;
     title: string;
-    location?: string;
+    location: string;
     description: string;
     type: ConflictType;
     urgency: UrgencyLevel;
