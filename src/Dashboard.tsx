@@ -1,8 +1,9 @@
 import './App.css'
 import { getFlag } from "./data/countries.ts";
 import { getUrgColor } from "./data/types.ts";
-import { conflictModel } from "./data/data.ts";
 import type { HelpRequest } from "./data/data-model.ts";
+import {useContext, useEffect, useState} from "react";
+import { UserAuth } from "./context/userAuth.tsx";
 
 function ConflictCard({request}: { request: HelpRequest }){
     const urgClass = ["tag","mb-2"];
@@ -22,7 +23,7 @@ function ConflictCard({request}: { request: HelpRequest }){
     )
 }
 
-function FilterBox(){
+function FilterBox({ setFilter }: { setFilter: (filter: "*" | "MIE") => void }) {
     return (
         <div className="box mb-4">
             <div className="columns is-multiline">
@@ -59,11 +60,11 @@ function FilterBox(){
                     <label className="label">Visualizza</label>
                     <div className="control">
                         <label className="radio mr-3">
-                            <input className="mr-2" type="radio" name="filter" checked/>
+                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }/>
                             Tutte
                         </label>
                         <label className="radio">
-                            <input className="mr-2" type="radio" name="filter" checked/>
+                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("MIE") }/>
                             Solo le mie mediazioni
                         </label>
                     </div>
@@ -76,16 +77,43 @@ function FilterBox(){
 
 export function Dashboard(){
     const cards = [];
-    for(const req of conflictModel.getAllRequests()) {
+    const [ filter, setFilter ] = useState<"*" | "MIE">("*");
+    const [ requests, setRequests ] = useState<HelpRequest[]>([]);
+    const { user } = useContext(UserAuth);
+
+    function loadRequests() {
+        fetch("http://localhost:8080/help-requests",{
+            credentials: "include"
+        }).then(res => res.json())
+            .then((data) => setRequests(data))
+            .catch((error) => console.log(error))
+    }
+
+    function loadMyRequests(){
+        if(user === null) return;
+        fetch(`http://localhost:8080/mediator/${user.username}`,{
+            credentials: "include"
+        }).then(res => res.json())
+            .then((data) => setRequests(data))
+            .catch((error) => console.log(error));
+    }
+
+    useEffect(() => (filter === "*") ?  loadRequests()  : loadMyRequests(),
+        [user, requests, filter, loadMyRequests]);
+
+    if(user === null)
+        return (<></>)
+
+    for(const req of requests) {
         cards.push(
-            <div className="column is-half">
+            <div className="column is-half" key={req.id}>
                 { <ConflictCard request={req}/> }
             </div>
         );
     }
     return (
         <div className="container mt-5">
-            <FilterBox/>
+            <FilterBox setFilter={setFilter}/>
             <h1 className="title">Dashboard Mediatore</h1>
             <div className="columns is-multiline">
                 { cards }

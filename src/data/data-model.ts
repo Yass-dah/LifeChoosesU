@@ -2,8 +2,7 @@ import {type ConflictType, type UrgencyLevel, type ConflictStatus} from "./types
 import {type Country} from "./countries.ts";
 
 export interface User {
-    id: number;
-    name: string;
+    username: string;
     email: string;
     role: 'RICHIEDENTE' | 'MEDIATORE';
 }
@@ -17,8 +16,8 @@ export interface HelpRequest {
     urgency: UrgencyLevel;
     status: ConflictStatus;
     country: Country;
-    requesterId: number;
-    mediatorId?: number;
+    requesterUsername: string;
+    mediatorUsername?: string;
     anonymous: boolean;
     aidAnswer?: string;
 }
@@ -91,11 +90,11 @@ export class ConflictModel {
         return false;
     }
 
-    assignRequest(requestId: number, mediator: number): boolean{
+    assignRequest(requestId: number, mediator: string): boolean{
         const request = this.requests[requestId];
         if(request !== undefined){
             if(request.status === "IN ATTESA") {
-                this.requests[requestId].mediatorId = mediator;
+                this.requests[requestId].mediatorUsername = mediator;
                 this.requests[requestId].status = "IN GESTIONE";
                 return true;
             }
@@ -113,10 +112,10 @@ export class ConflictModel {
         return false;
     }
 
-    recoverRequest(requestId: number, mediator: number) {
+    recoverRequest(requestId: number, mediator: string) {
         const request = this.requests[requestId];
         if(request !== undefined){
-            if(request.mediatorId === mediator) {
+            if(request.mediatorUsername === mediator) {
                 this.requests[requestId].status = "IN ATTESA";
                 return true;
             }
@@ -124,10 +123,10 @@ export class ConflictModel {
         return false;
     }
 
-    addAnswer(requestId: number, answer: string, mediator: number){
+    addAnswer(requestId: number, answer: string, mediator: string){
         const request = this.requests[requestId];
         if(request !== undefined){
-            if(request.mediatorId === mediator && request.status === "IN GESTIONE") {
+            if(request.mediatorUsername === mediator && request.status === "IN GESTIONE") {
                 this.requests[requestId].aidAnswer = answer;
             }
         }
