@@ -16,4 +16,4 @@ export function getUrgColor(urgency: UrgencyLevel) {
     }
 }
 
-export type ConflictStatus = "IN ATTESA" | "IN GESTIONE" | "RISOLTO";
+export type ConflictStatus = "IN_ATTESA" | "IN_GESTIONE" | "RISOLTO";

@@ -93,9 +93,9 @@ export class ConflictModel {
     assignRequest(requestId: number, mediator: string): boolean{
         const request = this.requests[requestId];
         if(request !== undefined){
-            if(request.status === "IN ATTESA") {
+            if(request.status === "IN_ATTESA") {
                 this.requests[requestId].mediatorUsername = mediator;
-                this.requests[requestId].status = "IN GESTIONE";
+                this.requests[requestId].status = "IN_GESTIONE";
                 return true;
             }
         }
@@ -104,7 +104,7 @@ export class ConflictModel {
 
     resolveRequest(requestId: number): boolean{
         if(this.requests[requestId] !== undefined){
-            if(this.requests[requestId].status === "IN GESTIONE") {
+            if(this.requests[requestId].status === "IN_GESTIONE") {
                 this.requests[requestId].status = "RISOLTO";
                 return true;
             }
@@ -116,7 +116,7 @@ export class ConflictModel {
         const request = this.requests[requestId];
         if(request !== undefined){
             if(request.mediatorUsername === mediator) {
-                this.requests[requestId].status = "IN ATTESA";
+                this.requests[requestId].status = "IN_ATTESA";
                 return true;
             }
         }
@@ -126,7 +126,7 @@ export class ConflictModel {
     addAnswer(requestId: number, answer: string, mediator: string){
         const request = this.requests[requestId];
         if(request !== undefined){
-            if(request.mediatorUsername === mediator && request.status === "IN GESTIONE") {
+            if(request.mediatorUsername === mediator && request.status === "IN_GESTIONE") {
                 this.requests[requestId].aidAnswer = answer;
             }
         }

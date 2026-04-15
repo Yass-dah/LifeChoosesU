@@ -12,12 +12,12 @@ export function Login(setter: Props){
     const [ username, setUsername ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ role, setRole ] = useState("RICHIEDENTE");
+    const [ error, setError ] = useState<boolean>(false);
 
     function handleLogin() {
         fetch(`http://localhost:8080/session/login?username=${username}&password=${password}&role=${role}`, {
             credentials: "include"
-        })
-            .then(res => res.json())
+        }).then(res => res.json())
             .then(sd => {
                 if (sd.username) {
                     setUser({
@@ -26,14 +26,15 @@ export function Login(setter: Props){
                         role: sd.role
                     });
                     setter.setPage("dashboard");
-                }
+                } else setError(true);
             });
     }
 
     return (
         <div className="login-container">
             <div className="login-box box">
-                <h1 className="title is-size-4 has-text-centered">Login</h1>
+                <h1 className="title is-size-4 has-text-centered">Accedi come { role.toLowerCase() }</h1>
+                { (error) ? <p className="has-text-danger has-text-centered mt-3 mb-3"> Password e/o Username errato/i</p> : null }
                 <div className="field">
                     <label className="label">Seleziona ruolo</label>
                     <div className="control">
@@ -46,9 +47,9 @@ export function Login(setter: Props){
                     </div>
                 </div>
                 <div className="field">
-                    <label className="label">Email</label>
+                    <label className="label">Username</label>
                     <div className="control">
-                        <input className="input" type="text" placeholder="Inserisci email"
+                        <input className="input" type="text" placeholder="Inserisci username"
                                onChange={ (e) => setUsername(e.target.value) }/>
                     </div>
                 </div>

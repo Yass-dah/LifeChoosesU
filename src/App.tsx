@@ -76,9 +76,9 @@ function App(){
         <>
             <UserAuth.Provider value={{ user, setUser }}>
             <div id="app">
-                <Navbar setPage={setPage}/>
+                <Navbar page={page} setPage={setPage}/>
                 { mainContent }
-                {page === "home" ? <Steps /> : null}
+                { page === "home" ? <Steps /> : null}
                 <Footer />
             </div>
             </UserAuth.Provider>

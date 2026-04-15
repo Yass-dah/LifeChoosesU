@@ -3,6 +3,7 @@ import {type ReactElement, useContext} from "react";
 import {UserAuth} from "./context/userAuth.tsx";
 
 type Props = {
+    page: string,
     setPage: (page: string) => void;
 };
 
@@ -27,7 +28,7 @@ export function Navbar(setter: Props) {
                               onClick={() => setter.setPage("login")}>Login</button>;
     else
         mainContent = <button className="button is-light is-outlined"
-                    onClick={ handleLogout }>{ user.username }</button>;
+                    onClick={ handleLogout }>{ user.username }<br /> (Logout) </button>;
 
     console.log("current user: " + (user ? user.username : null));
     return (
@@ -37,7 +38,7 @@ export function Navbar(setter: Props) {
             <div className="nav-buttons">
                 <button className="button is-warning mx-4"
                         onClick={() => setter.setPage("home")}>Home</button>
-                { mainContent }
+                { (setter.page !== "login" && setter.page !== "register") ? mainContent : null }
             </div>
         </div>
     )

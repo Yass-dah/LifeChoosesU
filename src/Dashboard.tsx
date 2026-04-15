@@ -8,8 +8,9 @@ import { UserAuth } from "./context/userAuth.tsx";
 function ConflictCard({request}: { request: HelpRequest }){
     const urgClass = ["tag","mb-2"];
     urgClass.push(getUrgColor(request.urgency));
-    const reqDone = (request.status === "IN GESTIONE" || request.status === "RISOLTO");
+    const reqDone = (request.status === "IN_GESTIONE" || request.status === "RISOLTO");
     const chosable = reqDone ? "disabled" : "";
+    console.log(request.mediatorUsername);
     return (
         <div className={"box conflict-card urgent " + chosable}>
             <h3 className="title is-5">{ request.title }</h3>
@@ -17,7 +18,8 @@ function ConflictCard({request}: { request: HelpRequest }){
             <p><strong>Luogo:</strong> { request.location + " " + getFlag(request.country) }</p>
             <p className="mt-2">{ request.description }</p>
             <button className="button is-link is-light mt-3" disabled={reqDone}>
-                Intervieni
+                { (request.status === "IN_ATTESA") ? "Intervieni" :
+                    ((request.status === "IN_GESTIONE") ? "In gestione da " + request.mediatorUsername?.username : "Risolto: " + request.aidAnswer)}
             </button>
         </div>
     )
@@ -98,8 +100,7 @@ export function Dashboard(){
             .catch((error) => console.log(error));
     }
 
-    useEffect(() => (filter === "*") ?  loadRequests()  : loadMyRequests(),
-        [user, requests, filter, loadMyRequests]);
+    useEffect(() => (filter === "MIE") ?  loadMyRequests()  : loadRequests());
 
     if(user === null)
         return (<></>)
