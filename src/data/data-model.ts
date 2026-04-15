@@ -16,8 +16,8 @@ export interface HelpRequest {
     urgency: UrgencyLevel;
     status: ConflictStatus;
     country: Country;
-    requesterUsername: string;
-    mediatorUsername?: string;
+    requester: string;
+    mediator?: string;
     anonymous: boolean;
     aidAnswer?: string;
 }
@@ -94,7 +94,7 @@ export class ConflictModel {
         const request = this.requests[requestId];
         if(request !== undefined){
             if(request.status === "IN_ATTESA") {
-                this.requests[requestId].mediatorUsername = mediator;
+                this.requests[requestId].mediator = mediator;
                 this.requests[requestId].status = "IN_GESTIONE";
                 return true;
             }
@@ -115,7 +115,7 @@ export class ConflictModel {
     recoverRequest(requestId: number, mediator: string) {
         const request = this.requests[requestId];
         if(request !== undefined){
-            if(request.mediatorUsername === mediator) {
+            if(request.mediator === mediator) {
                 this.requests[requestId].status = "IN_ATTESA";
                 return true;
             }
@@ -126,7 +126,7 @@ export class ConflictModel {
     addAnswer(requestId: number, answer: string, mediator: string){
         const request = this.requests[requestId];
         if(request !== undefined){
-            if(request.mediatorUsername === mediator && request.status === "IN_GESTIONE") {
+            if(request.mediator === mediator && request.status === "IN_GESTIONE") {
                 this.requests[requestId].aidAnswer = answer;
             }
         }

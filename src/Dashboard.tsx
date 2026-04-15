@@ -1,68 +1,130 @@
 import './App.css'
-import { getFlag } from "./data/countries.ts";
-import { getUrgColor } from "./data/types.ts";
+import {type Country, getFlag} from "./data/countries.ts";
+import {type ConflictStatus, type ConflictType, getUrgColor, type UrgencyLevel} from "./data/types.ts";
 import type { HelpRequest } from "./data/data-model.ts";
 import {useContext, useEffect, useState} from "react";
 import { UserAuth } from "./context/userAuth.tsx";
 
-function ConflictCard({request}: { request: HelpRequest }){
+type Props = {
+    setPage: (page: string) => void;
+}
+
+type modelFilter = {
+    type: ConflictType | "",
+    urgency: UrgencyLevel | "",
+    status: ConflictStatus | "",
+    country: Country | "";
+}
+
+function ConflictCard({request, setter}: { request: HelpRequest, setter: Props}) {
+    const { user } = useContext(UserAuth);
     const urgClass = ["tag","mb-2"];
     urgClass.push(getUrgColor(request.urgency));
-    const reqDone = (request.status === "IN_GESTIONE" || request.status === "RISOLTO");
+    const reqDone = ((request.status === "IN_GESTIONE" && request.mediator !== user?.username) || request.status === "RISOLTO");
     const chosable = reqDone ? "disabled" : "";
-    console.log(request.mediatorUsername);
     return (
         <div className={"box conflict-card urgent " + chosable}>
             <h3 className="title is-5">{ request.title }</h3>
             <span className={ urgClass.join(" ") }>{ request.urgency } URGENZA</span>
             <p><strong>Luogo:</strong> { request.location + " " + getFlag(request.country) }</p>
             <p className="mt-2">{ request.description }</p>
-            <button className="button is-link is-light mt-3" disabled={reqDone}>
+            <button className="button is-link is-light mt-3" disabled={reqDone}
+            onClick={ () => setter.setPage("help") }>
                 { (request.status === "IN_ATTESA") ? "Intervieni" :
-                    ((request.status === "IN_GESTIONE") ? "In gestione da " + request.mediatorUsername?.username : "Risolto: " + request.aidAnswer)}
+                    ((request.status === "IN_GESTIONE") ? "In gestione da " +
+                        ((request.mediator === user?.username) ? "te" : request.mediator)
+                        : "Risolto: " + request.aidAnswer)}
             </button>
         </div>
     )
 }
 
-function FilterBox({ setFilter }: { setFilter: (filter: "*" | "MIE") => void }) {
+function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (filter: "*" | "MIE") => void, modelFilter: modelFilter,
+    setModelFilter: (value: modelFilter) => void}) {
     return (
         <div className="box mb-4">
             <div className="columns is-multiline">
-                <div className="column is-4">
+                <div className="column is-3">
                     <label className="label">Tipo</label>
                     <div className="select is-fullwidth">
-                        <select>
-                            <option>Tutti</option>
-                            <option>Familiare</option>
-                            <option>Scolastico</option>
-                            <option>Lavorativo</option>
-                            <option>Sociale</option>
-                            <option>Altro</option>
+                        <select onChange={ (e) =>
+                            setModelFilter({type: e.target.value as ConflictType | "",
+                                urgency: modelFilter.urgency,
+                                status: modelFilter.status,
+                                country: modelFilter.country})
+                        }>
+                            <option value="">Tutti</option>
+                            <option value="FAMILIARE">Familiare</option>
+                            <option value="SCOLASTICO">Scolastico</option>
+                            <option value="LAVORATIVO">Lavorativo</option>
+                            <option value="SOCIALE">Sociale</option>
+                            <option value="ALTRO">Altro</option>
                         </select>
                     </div>
                 </div>
-                <div className="column is-4">
+                <div className="column is-3">
                     <label className="label">Urgenza</label>
                     <div className="select is-fullwidth">
-                        <select>
-                            <option>Tutte</option>
-                            <option>Alta</option>
-                            <option>Media</option>
-                            <option>Bassa</option>
+                        <select onChange={ (e) =>
+                            setModelFilter({type: modelFilter.type,
+                                urgency: e.target.value as UrgencyLevel | "",
+                                status: modelFilter.status,
+                                country: modelFilter.country})
+                        }>
+                            <option value="">Tutte</option>
+                            <option value="ALTA">Alta</option>
+                            <option value="MEDIA">Media</option>
+                            <option value="BASSA">Bassa</option>
                         </select>
                     </div>
                 </div>
-                <div className="column is-4 is-flex is-align-items-end">
-                    <button className="button is-primary is-fullwidth">
-                        Applica filtri
-                    </button>
+                <div className="column is-3">
+                    <label className="label">Stato</label>
+                    <div className="select is-fullwidth">
+                        <select onChange={ (e) =>
+                            setModelFilter({type: modelFilter.type,
+                                urgency: modelFilter.urgency,
+                                status: e.target.value as ConflictStatus | "",
+                                country: modelFilter.country})
+                        }>
+                            <option value="">Tutti</option>
+                            <option value="IN ATTESA">In attesa</option>
+                            <option value="IN GESTIONE">In gestione</option>
+                            <option value="RISOLTO">Risolto</option>
+                        </select>
+                    </div>
                 </div>
+                <div className="column is-3">
+                    <label className="label">Paese</label>
+                    <div className="select is-fullwidth">
+                        <select onChange={ (e) =>
+                            setModelFilter({type: modelFilter.type,
+                                urgency: modelFilter.urgency,
+                                status: modelFilter.status,
+                                country: e.target.value as Country | ""})
+                        }>
+                            <option value="">Tutti</option>
+                            <option value="Italia">Italia</option>
+                            <option value="Ucraina">Ucraina</option>
+                            <option value="Palestina">Palestina</option>
+                            <option value="Libano">Libano</option>
+                            <option value="Siria">Siria</option>
+                            <option value="Sudan">Sudan</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Iran">Iran</option>
+                            <option value="Yemen">Yemen</option>
+                            <option value="Libia">Libia</option>
+                            <option value="Cuba">Cuba</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div className="column is-4">
                     <label className="label">Visualizza</label>
                     <div className="control">
                         <label className="radio mr-3">
-                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }/>
+                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }
+                            defaultChecked/>
                             Tutte
                         </label>
                         <label className="radio">
@@ -77,8 +139,8 @@ function FilterBox({ setFilter }: { setFilter: (filter: "*" | "MIE") => void }) 
     )
 }
 
-export function Dashboard(){
-    const cards = [];
+export function Dashboard(setter: Props) {
+    const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: "", urgency: "",status: "",country: ""});
     const [ filter, setFilter ] = useState<"*" | "MIE">("*");
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
     const { user } = useContext(UserAuth);
@@ -100,24 +162,27 @@ export function Dashboard(){
             .catch((error) => console.log(error));
     }
 
-    useEffect(() => (filter === "MIE") ?  loadMyRequests()  : loadRequests());
+    useEffect(() => (filter === "MIE") ?  loadMyRequests()  : loadRequests(), [filter, user]);
 
-    if(user === null)
-        return (<></>)
+    if(user === null || user.role !== "MEDIATORE")
+        return (<p className="mt-4 has-text-centered">UNAUTHORIZED</p>)
 
-    for(const req of requests) {
-        cards.push(
-            <div className="column is-half" key={req.id}>
-                { <ConflictCard request={req}/> }
-            </div>
-        );
-    }
+    const filteredRequests = requests.filter(req =>
+        (modelFilter.type === "" || modelFilter.type === req.type) &&
+        (modelFilter.urgency === "" || modelFilter.urgency === req.urgency) &&
+        (modelFilter.status === "" || modelFilter.status === req.status) &&
+        (modelFilter.country === "" || modelFilter.country === req.country)
+    );
     return (
         <div className="container mt-5">
-            <FilterBox setFilter={setFilter}/>
-            <h1 className="title">Dashboard Mediatore</h1>
+            <FilterBox setFilter={setFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
+            <h1 className="title">{ filter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">
-                { cards }
+                {filteredRequests.map(req => (
+                    <div className="column is-half" key={req.id}>
+                        <ConflictCard request={req} setter={setter}/>
+                    </div>
+                ))}
             </div>
         </div>
     )

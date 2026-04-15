@@ -62,10 +62,10 @@ function App(){
             mainContent = <Support/>
             break;
         case "explore":
-            mainContent = <Explore/>
+            mainContent = <Explore setPage={setPage}/>
             break;
         case "dashboard":
-            mainContent = <Dashboard/>
+            mainContent = <Dashboard setPage={setPage}/>
             break;
         default:
             mainContent = <></>;

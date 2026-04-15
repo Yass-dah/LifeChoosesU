@@ -3,10 +3,15 @@ import './App.css'
 import { type Country, getFlag } from "./data/countries.ts";
 import { type ConflictType, type UrgencyLevel, getUrgColor } from "./data/types.ts";
 
-import { useState } from "react";
+import {useContext, useState} from "react";
 import * as React from "react";
+import {UserAuth} from "./context/userAuth.tsx";
 
 type categories = "country" | "type" | "urgency";
+
+type pageProps = {
+    setPage: (page: string) => void;
+}
 
 type groupProp = {
     setGroup: (group: categories) => void
@@ -35,7 +40,8 @@ function FilterBox(setter: groupProp){
     )
 }
 
-function CountryCard({country}: { country: Country }){
+function CountryCard({country, setter}: { country: Country, setter: pageProps }){
+    const { user } = useContext(UserAuth);
     return (
         <div className="column is-half">
             <div className="country-card box">
@@ -43,7 +49,13 @@ function CountryCard({country}: { country: Country }){
                     <div className="country-info">
                         <h3 className="title is-5">{ country + " " + getFlag(country) }</h3>
                         <p>Conflitti sociali e episodi di bullismo</p>
-                        <button className="button is-light mt-3">Visualizza dettagli</button>
+                        <button className="button is-light mt-3"
+                            onClick={() =>
+                                { if(user === null || user.role !== "MEDIATORE")
+                                    setter.setPage("login");
+                                else
+                                    setter.setPage("dashboard");
+                                }}>Visualizza dettagli</button>
                     </div>
                     <div className="country-image">
                         <img src={`/countries/${country}.jpg`} alt={ country } />
@@ -54,7 +66,8 @@ function CountryCard({country}: { country: Country }){
     )
 }
 
-function TypeCard({type}: { type: ConflictType }){
+function TypeCard({type, setter}: { type: ConflictType, setter: pageProps}){
+    const { user } = useContext(UserAuth);
     return (
         <div className="column is-half">
             <div className="type-card box">
@@ -62,7 +75,13 @@ function TypeCard({type}: { type: ConflictType }){
                     <div className="type-info">
                         <h3 className="title is-5">{ type }</h3>
                         <p>Conflitti sociali e episodi di bullismo</p>
-                        <button className="button is-light mt-3">Visualizza dettagli</button>
+                        <button className="button is-light mt-3"
+                        onClick={() =>
+                        { if(user === null || user.role !== "MEDIATORE")
+                            setter.setPage("login");
+                        else
+                            setter.setPage("dashboard");
+                        }}>Visualizza dettagli</button>
                     </div>
                 </div>
             </div>
@@ -70,7 +89,8 @@ function TypeCard({type}: { type: ConflictType }){
     )
 }
 
-function UrgencyCard({urgency}: { urgency: UrgencyLevel }){
+function UrgencyCard({urgency, setter}: { urgency: UrgencyLevel, setter: pageProps }){
+    const { user } = useContext(UserAuth);
     return (
         <div className="column is-half">
             <div className="urgency-card box ">
@@ -78,7 +98,13 @@ function UrgencyCard({urgency}: { urgency: UrgencyLevel }){
                     <div className="urgency-info ">
                         <h3 className="title is-5">{ urgency }</h3>
                         <p>Conflitti sociali e episodi di bullismo</p>
-                        <button className={"button is-light mt-3 " + getUrgColor(urgency)}>
+                        <button className={"button is-light mt-3 " + getUrgColor(urgency)}
+                        onClick={ () =>
+                        { if(user === null || user.role !== "MEDIATORE")
+                                setter.setPage("login");
+                            else
+                                setter.setPage("dashboard");
+                        }}>
                             Visualizza dettagli</button>
                     </div>
                 </div>
@@ -87,43 +113,43 @@ function UrgencyCard({urgency}: { urgency: UrgencyLevel }){
     )
 }
 
-function getCards(category: categories){
+function getCards(category: categories, setter: pageProps){
     const mainContent = [];
     if(category === "country"){
-        mainContent.push(<CountryCard country={"Italia"}/>);
-        mainContent.push(<CountryCard country={"Ucraina"}/>);
-        mainContent.push(<CountryCard country={"Palestina"}/>);
-        mainContent.push(<CountryCard country={"Libano"}/>);
-        mainContent.push(<CountryCard country={"Siria"}/>);
-        mainContent.push(<CountryCard country={"Sudan"}/>);
-        mainContent.push(<CountryCard country={"Afghanistan"}/>);
-        mainContent.push(<CountryCard country={"Iran"}/>);
-        mainContent.push(<CountryCard country={"Yemen"}/>);
-        mainContent.push(<CountryCard country={"Libia"}/>);
-        mainContent.push(<CountryCard country={"Cuba"}/>);
+        mainContent.push(<CountryCard country={"Italia"} setter={setter} />);
+        mainContent.push(<CountryCard country={"Ucraina"} setter={setter} />);
+        mainContent.push(<CountryCard country={"Palestina"} setter={setter} />);
+        mainContent.push(<CountryCard country={"Libano"} setter={setter} />);
+        mainContent.push(<CountryCard country={"Siria"} setter={setter}/>);
+        mainContent.push(<CountryCard country={"Sudan"} setter={setter} />);
+        mainContent.push(<CountryCard country={"Afghanistan"} setter={setter} />);
+        mainContent.push(<CountryCard country={"Iran"} setter={setter} />);
+        mainContent.push(<CountryCard country={"Yemen"} setter={setter}/>);
+        mainContent.push(<CountryCard country={"Libia"} setter={setter}/>);
+        mainContent.push(<CountryCard country={"Cuba"} setter={setter}/>);
     }
     else if(category === "type"){
-        mainContent.push(<TypeCard type={"FAMILIARE"}/>);
-        mainContent.push(<TypeCard type={"SCOLASTICO"}/>);
-        mainContent.push(<TypeCard type={"LAVORATIVO"}/>);
-        mainContent.push(<TypeCard type={"SOCIALE"}/>);
-        mainContent.push(<TypeCard type={"ALTRO"}/>);
+        mainContent.push(<TypeCard type={"FAMILIARE"} setter={setter} />);
+        mainContent.push(<TypeCard type={"SCOLASTICO"} setter={setter} />);
+        mainContent.push(<TypeCard type={"LAVORATIVO"} setter={setter} />);
+        mainContent.push(<TypeCard type={"SOCIALE"} setter={setter} />);
+        mainContent.push(<TypeCard type={"ALTRO"} setter={setter} />);
     }
     else if(category === "urgency"){
-        mainContent.push(<UrgencyCard urgency={"ALTA"}/>)
-        mainContent.push(<UrgencyCard urgency={"MEDIA"}/>)
-        mainContent.push(<UrgencyCard urgency={"BASSA"}/>);
+        mainContent.push(<UrgencyCard urgency={"ALTA"} setter={setter} />)
+        mainContent.push(<UrgencyCard urgency={"MEDIA"} setter={setter} />)
+        mainContent.push(<UrgencyCard urgency={"BASSA"} setter={setter} />);
     }
     return mainContent;
 }
 
-export function Explore(){
+export function Explore(setter: pageProps){
     const [group, setGroup] = useState<categories>("country");
     return (
         <div className="explore-container container mt-5">
             <FilterBox setGroup={ setGroup }/>
             <div className="columns is-multiline">
-                { getCards(group) }
+                { getCards(group, setter) }
             </div>
         </div>
     )
