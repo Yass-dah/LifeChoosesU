@@ -1,7 +1,7 @@
 import './App.css'
 
 import { type Country, getFlag } from "./data/countries.ts";
-import { type ConflictType, type UrgencyLevel, getUrgColor } from "./data/types.ts";
+import {type ConflictType, type UrgencyLevel, getUrgColor} from "./data/types.ts";
 
 import {useContext, useState} from "react";
 import * as React from "react";
@@ -52,7 +52,7 @@ function CountryCard({country, setter}: { country: Country, setter: pageProps })
                         <button className="button is-light mt-3"
                             onClick={() =>
                                 { if(user === null || user.role !== "MEDIATORE")
-                                    setter.setPage("login");
+                                    setter.setPage("loginM");
                                 else
                                     setter.setPage("dashboard");
                                 }}>Visualizza dettagli</button>
@@ -78,7 +78,7 @@ function TypeCard({type, setter}: { type: ConflictType, setter: pageProps}){
                         <button className="button is-light mt-3"
                         onClick={() =>
                         { if(user === null || user.role !== "MEDIATORE")
-                            setter.setPage("login");
+                            setter.setPage("loginM");
                         else
                             setter.setPage("dashboard");
                         }}>Visualizza dettagli</button>
@@ -95,13 +95,13 @@ function UrgencyCard({urgency, setter}: { urgency: UrgencyLevel, setter: pagePro
         <div className="column is-half">
             <div className="urgency-card box ">
                 <div className="urgency-content">
-                    <div className="urgency-info ">
+                    <div className="urgency-info">
                         <h3 className="title is-5">{ urgency }</h3>
                         <p>Conflitti sociali e episodi di bullismo</p>
                         <button className={"button is-light mt-3 " + getUrgColor(urgency)}
                         onClick={ () =>
                         { if(user === null || user.role !== "MEDIATORE")
-                                setter.setPage("login");
+                                setter.setPage("loginM");
                             else
                                 setter.setPage("dashboard");
                         }}>

@@ -35,7 +35,7 @@ export function Support(){
                     </div>
                 </div>
                 <div className="field">
-                    <label className="label">Luogo (opzionale)</label>
+                    <label className="label">Luogo</label>
                     <div className="control">
                         <input className="input" type="text" placeholder="Es. Torino, Italia"/>
                     </div>

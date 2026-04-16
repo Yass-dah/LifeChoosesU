@@ -3,6 +3,7 @@ import {useContext, useState} from "react";
 import {UserAuth} from "./context/userAuth.tsx";
 
 type Props = {
+    role: "RICHIEDENTE" | "MEDIATORE";
     setPage: (page: string) => void;
 }
 
@@ -11,7 +12,7 @@ export function Login(setter: Props){
 
     const [ username, setUsername ] = useState("");
     const [ password, setPassword ] = useState("");
-    const [ role, setRole ] = useState("RICHIEDENTE");
+    const [ role, setRole ] = useState<string>(setter.role);
     const [ error, setError ] = useState<boolean>(false);
 
     function handleLogin() {
@@ -25,7 +26,7 @@ export function Login(setter: Props){
                         email: "",
                         role: sd.role
                     });
-                    setter.setPage("dashboard");
+                    setter.setPage((sd.role === "MEDIATORE") ? "dashboard" : "home");
                 } else setError(true);
             });
     }
@@ -39,7 +40,8 @@ export function Login(setter: Props){
                     <label className="label">Seleziona ruolo</label>
                     <div className="control">
                         <div className="select is-fullwidth">
-                            <select onChange={ (e) => setRole(e.target.value) }>
+                            <select onChange={ (e) => setRole(e.target.value) }
+                            defaultValue={role}>
                                 <option value="RICHIEDENTE">Richiedente supporto</option>
                                 <option value="MEDIATORE">Mediatore</option>
                             </select>

@@ -6,6 +6,7 @@ import {useContext, useEffect, useState} from "react";
 import { UserAuth } from "./context/userAuth.tsx";
 
 type Props = {
+    setSelectedRequest: (req: HelpRequest) => void,
     setPage: (page: string) => void;
 }
 
@@ -29,7 +30,9 @@ function ConflictCard({request, setter}: { request: HelpRequest, setter: Props})
             <p><strong>Luogo:</strong> { request.location + " " + getFlag(request.country) }</p>
             <p className="mt-2">{ request.description }</p>
             <button className="button is-link is-light mt-3" disabled={reqDone}
-            onClick={ () => setter.setPage("help") }>
+            onClick={ () => {
+                setter.setSelectedRequest(request)
+                setter.setPage("help") }}>
                 { (request.status === "IN_ATTESA") ? "Intervieni" :
                     ((request.status === "IN_GESTIONE") ? "In gestione da " +
                         ((request.mediator === user?.username) ? "te" : request.mediator)
@@ -88,8 +91,8 @@ function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (fil
                                 country: modelFilter.country})
                         }>
                             <option value="">Tutti</option>
-                            <option value="IN ATTESA">In attesa</option>
-                            <option value="IN GESTIONE">In gestione</option>
+                            <option value="IN_ATTESA">In attesa</option>
+                            <option value="IN_GESTIONE">In gestione</option>
                             <option value="RISOLTO">Risolto</option>
                         </select>
                     </div>
@@ -123,12 +126,12 @@ function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (fil
                     <label className="label">Visualizza</label>
                     <div className="control">
                         <label className="radio mr-3">
-                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }
-                            defaultChecked/>
+                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }/>
                             Tutte
                         </label>
                         <label className="radio">
-                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("MIE") }/>
+                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("MIE") }
+                            defaultChecked/>
                             Solo le mie mediazioni
                         </label>
                     </div>
@@ -141,7 +144,7 @@ function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (fil
 
 export function Dashboard(setter: Props) {
     const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: "", urgency: "",status: "",country: ""});
-    const [ filter, setFilter ] = useState<"*" | "MIE">("*");
+    const [ filter, setFilter ] = useState<"*" | "MIE">("MIE");
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
     const { user } = useContext(UserAuth);
 

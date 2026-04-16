@@ -12,7 +12,7 @@ import {Explore} from "./Explore.tsx";
 import {Dashboard} from "./Dashboard.tsx";
 
 import {type ReactElement, useEffect, useState} from "react";
-import type {User} from "./data/data-model.ts";
+import type {HelpRequest, User} from "./data/data-model.ts";
 
 import {UserAuth} from "./context/userAuth.tsx";
 
@@ -25,6 +25,7 @@ interface SessionData{
 function App(){
     const [user, setUser] = useState<User | null>(null);
     const [page, setPage] = useState("home");
+    const [selectedRequest, setSelectedRequest] = useState<HelpRequest | null>(null);
 
     function checkConnection(){
         let valid = true;
@@ -49,14 +50,17 @@ function App(){
         case "home":
             mainContent = <Home setPage={setPage}/>;
             break;
-        case "login":
-            mainContent = <Login setPage={setPage}/>;
+        case "loginR":
+            mainContent = <Login setPage={setPage} role={"RICHIEDENTE"}/>;
+            break;
+        case "loginM":
+            mainContent = <Login setPage={setPage} role={"MEDIATORE"}/>;
             break;
         case "register":
             mainContent = <Register setPage={setPage}/>;
             break;
         case "help":
-            mainContent = <Help/>
+            mainContent = <Help request={selectedRequest as HelpRequest} setPage={setPage}/>
             break;
         case "support":
             mainContent = <Support/>
@@ -65,7 +69,7 @@ function App(){
             mainContent = <Explore setPage={setPage}/>
             break;
         case "dashboard":
-            mainContent = <Dashboard setPage={setPage}/>
+            mainContent = <Dashboard setPage={setPage} setSelectedRequest={setSelectedRequest}/>
             break;
         default:
             mainContent = <></>;

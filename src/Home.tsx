@@ -19,7 +19,7 @@ export function Home(setter: pageProps){
                         if(user !== null && user.role === "RICHIEDENTE")
                             setter.setPage("support")
                         else
-                            setter.setPage("login");
+                            setter.setPage("loginR");
                     }}>Chiedi supporto</button>
                 }
                 { (user !== null && user.role === "RICHIEDENTE") ? null :
@@ -28,7 +28,7 @@ export function Home(setter: pageProps){
                         if(user !== null && user.role === "MEDIATORE")
                             setter.setPage("dashboard")
                         else
-                            setter.setPage("login");
+                            setter.setPage("loginM");
                     }}>{user === null ? "Accedi come mediatore" : "La mia Dashboard"}</button>
                 }
             </div>
