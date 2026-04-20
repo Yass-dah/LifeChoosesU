@@ -12,9 +12,10 @@ import {Explore} from "./Explore.tsx";
 import {Dashboard} from "./Dashboard.tsx";
 
 import {type ReactElement, useEffect, useState} from "react";
-import type {HelpRequest, User} from "./data/data-model.ts";
+import type {HelpRequest, User, Country} from "./data/data-model.ts";
 
 import {UserAuth} from "./context/userAuth.tsx";
+import {CountriesContext} from "./context/countries.tsx";
 
 interface SessionData{
     username: string;
@@ -26,6 +27,7 @@ function App(){
     const [user, setUser] = useState<User | null>(null);
     const [page, setPage] = useState("home");
     const [selectedRequest, setSelectedRequest] = useState<HelpRequest | null>(null);
+    const [countries, setCountries] = useState<Country[]>([]);
 
     function checkConnection(){
         let valid = true;
@@ -35,16 +37,25 @@ function App(){
             .then((sd: SessionData) => {
                 if (valid) {
                     setUser(sd.username ?
-                        { username: sd.username, email: "", role: sd.role as 'MEDIATORE' | 'RICHIEDENTE'}
+                        { username: sd.username,
+                            email: "",
+                            role: sd.role as 'MEDIATORE' | 'RICHIEDENTE'}
                         : null);
                 }
             });
-        return () => {
-            valid = false;
-        };
+        return () => { valid = false;};
     }
 
     useEffect(() => { checkConnection() }, []);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/help-requests/countries", {
+            credentials: "include"
+        }).then(res => res.json())
+            .then((data) => setCountries(data))
+            .catch(err => console.log(err));
+    }, []);
+
     let mainContent: ReactElement;
     switch(page){
         case "home":
@@ -56,14 +67,17 @@ function App(){
         case "loginM":
             mainContent = <Login setPage={setPage} role={"MEDIATORE"}/>;
             break;
-        case "register":
-            mainContent = <Register setPage={setPage}/>;
+        case "registerR":
+            mainContent = <Register setPage={setPage} role={"RICHIEDENTE"}/>;
+            break;
+        case "registerM":
+            mainContent = <Register setPage={setPage} role={"MEDIATORE"}/>;
             break;
         case "help":
             mainContent = <Help request={selectedRequest as HelpRequest} setPage={setPage}/>
             break;
         case "support":
-            mainContent = <Support/>
+            mainContent = <Support setPage={setPage}/>
             break;
         case "explore":
             mainContent = <Explore setPage={setPage}/>
@@ -79,12 +93,14 @@ function App(){
     return (
         <>
             <UserAuth.Provider value={{ user, setUser }}>
-            <div id="app">
-                <Navbar page={page} setPage={setPage}/>
-                { mainContent }
-                { page === "home" ? <Steps /> : null}
-                <Footer />
-            </div>
+                <CountriesContext.Provider value={{ countries, setCountries }}>
+                    <div id="app">
+                        <Navbar page={page} setPage={setPage}/>
+                        { mainContent }
+                        { page === "home" ? <Steps /> : null}
+                        <Footer />
+                    </div>
+                </CountriesContext.Provider>
             </UserAuth.Provider>
         </>
     )

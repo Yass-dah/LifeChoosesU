@@ -1,18 +1,39 @@
 import './App.css'
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import type { HelpRequest } from "./data/data-model.ts";
 import {UserAuth} from "./context/userAuth.tsx";
 
-type Props = {
+type pageProps = {
     request: HelpRequest;
     setPage: (page: string) => void;
 }
 
-export function Help({ request, setPage }: Props){
+export function Help({ request, setPage }: pageProps){
     const { user } = useContext(UserAuth);
 
     const [currentRequest, setCurrentRequest] = useState<HelpRequest>(request);
-    const [answer, setAnswer] = useState(request.aidAnswer || "");
+    const [answer, setAnswer] = useState(currentRequest.aidAnswer || "");
+
+    function loadAnswer() {
+        let valid = true;
+        fetch(`http://localhost:8080/hr/${currentRequest.id}/response`, {
+            credentials: "include"
+        }).then(res => {
+                if (!res.ok) throw new Error("Errore");
+                return res.json();
+            }).then(data => {
+                if(valid) {
+                    setCurrentRequest(prev => ({
+                        ...prev,
+                        aidAnswer: data.answer
+                    }));
+                    setAnswer(data.answer);
+                }
+            });
+        return () => { valid = false };
+    }
+
+    useEffect(loadAnswer, [currentRequest.id, setPage]);
 
     function handleSubmit() {
         fetch(`http://localhost:8080/hr/${currentRequest.id}/answer`, {
@@ -31,7 +52,7 @@ export function Help({ request, setPage }: Props){
                 aidAnswer: answer
             })))
             setPage("dashboard");
-        }).catch(err => console.log(err));
+        });
     }
 
     function takeInCharge() {
@@ -44,8 +65,7 @@ export function Help({ request, setPage }: Props){
                 ...prev,
                 status: "IN_GESTIONE"
             })))
-            setPage("dashboard");
-        }).catch(err => console.log(err));
+        });
     }
 
     function markResolved() {
@@ -59,7 +79,7 @@ export function Help({ request, setPage }: Props){
                 status: "RISOLTO"
             })))
             setPage("dashboard");
-        }).catch(err => console.log(err));
+        });
     }
 
     if (user === null || user.role !== "MEDIATORE")
@@ -69,8 +89,9 @@ export function Help({ request, setPage }: Props){
         <div className="container mt-5">
             <div className="box">
                 <p>{"ID: " + request.id }</p>
-                <h1 className="title is-size-4">{currentRequest.title + " from: " + currentRequest.requester}</h1>
-                <span className="tag is-danger mb-3">{currentRequest.urgency} urgenza</span>
+                <h1 className="title is-size-4">{currentRequest.title + " from: " +
+                    ((currentRequest.anonymous) ? "anonymous" : currentRequest.requester)}</h1>
+                <span className="tag is-danger mb-3">{currentRequest.urgency} URGENZA</span>
                 <p><strong>Luogo:</strong> {currentRequest.location}</p>
                 <p><strong>Stato:</strong> {currentRequest.status}</p>
                 <hr/>
@@ -91,8 +112,8 @@ export function Help({ request, setPage }: Props){
                     <div className="control">
                         <textarea
                             className="textarea"
-                            placeholder="Scrivi un consiglio o una strategia..."
-                            value={answer}
+                            placeholder="Scrivi un consiglio, una strategia o un intervento da effettuare/effettuatosi..."
+                            value={answer || ""}
                             onChange={(e) => setAnswer(e.target.value)}
                         />
                     </div>

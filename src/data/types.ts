@@ -6,13 +6,10 @@ export function getUrgColor(urgency: UrgencyLevel) {
     switch(urgency){
         case "MEDIA":
             return "is-warning";
-            break;
         case "ALTA":
             return "is-danger";
-            break;
         default:
             return "is-white";
-            break;
     }
 }
 

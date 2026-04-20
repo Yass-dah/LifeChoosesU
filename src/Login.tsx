@@ -2,20 +2,24 @@ import './App.tsx'
 import {useContext, useState} from "react";
 import {UserAuth} from "./context/userAuth.tsx";
 
-type Props = {
+type permissionProps = {
     role: "RICHIEDENTE" | "MEDIATORE";
     setPage: (page: string) => void;
 }
 
-export function Login(setter: Props){
+export function Login(setter: permissionProps){
     const { setUser } = useContext(UserAuth);
 
     const [ username, setUsername ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ role, setRole ] = useState<string>(setter.role);
-    const [ error, setError ] = useState<boolean>(false);
+    const [ error, setError ] = useState<string | null>(null);
 
     function handleLogin() {
+        if (!username || !password) {
+            setError("Compila tutti i campi");
+            return;
+        }
         fetch(`http://localhost:8080/session/login?username=${username}&password=${password}&role=${role}`, {
             credentials: "include"
         }).then(res => res.json())
@@ -27,7 +31,7 @@ export function Login(setter: Props){
                         role: sd.role
                     });
                     setter.setPage((sd.role === "MEDIATORE") ? "dashboard" : "home");
-                } else setError(true);
+                } else setError(sd.message);
             });
     }
 
@@ -35,7 +39,7 @@ export function Login(setter: Props){
         <div className="login-container">
             <div className="login-box box">
                 <h1 className="title is-size-4 has-text-centered">Accedi come { role.toLowerCase() }</h1>
-                { (error) ? <p className="has-text-danger has-text-centered mt-3 mb-3"> Password e/o Username errato/i</p> : null }
+                <p className="has-text-danger has-text-centered mt-3 mb-3">{ error }</p>
                 <div className="field">
                     <label className="label">Seleziona ruolo</label>
                     <div className="control">
@@ -70,7 +74,7 @@ export function Login(setter: Props){
                 </div>
                 <p className="has-text-centered mt-3">
                     Non hai un account?
-                    <a onClick={() => setter.setPage("register")}> Registrati</a>
+                    <a onClick={() => setter.setPage(role === "RICHIEDENTE" ? "registerR" : "registerM")}> Registrati</a>
                 </p>
             </div>
         </div>

@@ -1,5 +1,9 @@
 import {type ConflictType, type UrgencyLevel, type ConflictStatus} from "./types.ts";
-import {type Country} from "./countries.ts";
+
+export type Country = {
+    name: string;
+    flag: string;
+}
 
 export interface User {
     username: string;

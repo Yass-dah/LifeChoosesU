@@ -2,12 +2,12 @@ import './App.css'
 import {type ReactElement, useContext} from "react";
 import {UserAuth} from "./context/userAuth.tsx";
 
-type Props = {
+type pageProps = {
     page: string,
     setPage: (page: string) => void;
 };
 
-export function Navbar(setter: Props) {
+export function Navbar(setter: pageProps) {
     const { user , setUser } = useContext(UserAuth);
 
     function handleLogout() {
@@ -18,8 +18,7 @@ export function Navbar(setter: Props) {
                 if (!sd.username) {
                     setUser(null);
                     setter.setPage("home");
-                }
-            }).catch(err => console.error("Logout failed: ", err));
+                }});
     }
 
     let mainContent: ReactElement;

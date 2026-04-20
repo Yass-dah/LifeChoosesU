@@ -1,11 +1,11 @@
 import './App.css'
-import {type Country, getFlag} from "./data/countries.ts";
 import {type ConflictStatus, type ConflictType, getUrgColor, type UrgencyLevel} from "./data/types.ts";
-import type { HelpRequest } from "./data/data-model.ts";
+import type {Country, HelpRequest} from "./data/data-model.ts";
 import {useContext, useEffect, useState} from "react";
 import { UserAuth } from "./context/userAuth.tsx";
+import {CountriesContext, getFlag} from "./context/countries.tsx";
 
-type Props = {
+type pageProps = {
     setSelectedRequest: (req: HelpRequest) => void,
     setPage: (page: string) => void;
 }
@@ -17,8 +17,9 @@ type modelFilter = {
     country: Country | "";
 }
 
-function ConflictCard({request, setter}: { request: HelpRequest, setter: Props}) {
+function ConflictCard({request, setter}: { request: HelpRequest, setter: pageProps}) {
     const { user } = useContext(UserAuth);
+    const { countries } = useContext(CountriesContext);
     const urgClass = ["tag","mb-2"];
     urgClass.push(getUrgColor(request.urgency));
     const reqDone = ((request.status === "IN_GESTIONE" && request.mediator !== user?.username) || request.status === "RISOLTO");
@@ -27,7 +28,7 @@ function ConflictCard({request, setter}: { request: HelpRequest, setter: Props})
         <div className={"box conflict-card urgent " + chosable}>
             <h3 className="title is-5">{ request.title }</h3>
             <span className={ urgClass.join(" ") }>{ request.urgency } URGENZA</span>
-            <p><strong>Luogo:</strong> { request.location + " " + getFlag(request.country) }</p>
+            <p><strong>Luogo:</strong> { request.location + " " + getFlag(countries, request.country as never) }</p>
             <p className="mt-2">{ request.description }</p>
             <button className="button is-link is-light mt-3" disabled={reqDone}
             onClick={ () => {
@@ -44,6 +45,7 @@ function ConflictCard({request, setter}: { request: HelpRequest, setter: Props})
 
 function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (filter: "*" | "MIE") => void, modelFilter: modelFilter,
     setModelFilter: (value: modelFilter) => void}) {
+    const { countries } = useContext(CountriesContext);
     return (
         <div className="box mb-4">
             <div className="columns is-multiline">
@@ -107,21 +109,14 @@ function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (fil
                                 country: e.target.value as Country | ""})
                         }>
                             <option value="">Tutti</option>
-                            <option value="Italia">Italia</option>
-                            <option value="Ucraina">Ucraina</option>
-                            <option value="Palestina">Palestina</option>
-                            <option value="Libano">Libano</option>
-                            <option value="Siria">Siria</option>
-                            <option value="Sudan">Sudan</option>
-                            <option value="Afghanistan">Afghanistan</option>
-                            <option value="Iran">Iran</option>
-                            <option value="Yemen">Yemen</option>
-                            <option value="Libia">Libia</option>
-                            <option value="Cuba">Cuba</option>
+                            {countries.map((c) => (
+                                <option key={c.name} value={c.name}>
+                                    {c.name + " " + c.flag}
+                                </option>
+                            ))}
                         </select>
                     </div>
                 </div>
-
                 <div className="column is-4">
                     <label className="label">Visualizza</label>
                     <div className="control">
@@ -138,34 +133,43 @@ function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (fil
                 </div>
             </div>
         </div>
-
     )
 }
 
-export function Dashboard(setter: Props) {
+export function Dashboard(setter: pageProps) {
     const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: "", urgency: "",status: "",country: ""});
-    const [ filter, setFilter ] = useState<"*" | "MIE">("MIE");
+    const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">("MIE");
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
     const { user } = useContext(UserAuth);
 
     function loadRequests() {
+        if(user === null) return;
+        let valid = true;
         fetch("http://localhost:8080/help-requests",{
             credentials: "include"
         }).then(res => res.json())
-            .then((data) => setRequests(data))
-            .catch((error) => console.log(error))
+            .then((data) => {
+                if(valid)
+                    setRequests(data)
+            })
+        return () => { valid = false };
     }
 
     function loadMyRequests(){
         if(user === null) return;
+        let valid = true;
         fetch(`http://localhost:8080/mediator/${user.username}`,{
             credentials: "include"
         }).then(res => res.json())
-            .then((data) => setRequests(data))
-            .catch((error) => console.log(error));
+            .then((data) => {
+                if(valid)
+                    setRequests(data)
+            });
+        return () => { valid = false };
     }
 
-    useEffect(() => (filter === "MIE") ?  loadMyRequests()  : loadRequests(), [filter, user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => (dashFilter === "MIE") ? loadMyRequests() : loadRequests(), [dashFilter, user]);
 
     if(user === null || user.role !== "MEDIATORE")
         return (<p className="mt-4 has-text-centered">UNAUTHORIZED</p>)
@@ -178,8 +182,8 @@ export function Dashboard(setter: Props) {
     );
     return (
         <div className="container mt-5">
-            <FilterBox setFilter={setFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
-            <h1 className="title">{ filter === "*" ? "Esplora" : "La mia dashboard"}</h1>
+            <FilterBox setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
+            <h1 className="title">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">
                 {filteredRequests.map(req => (
                     <div className="column is-half" key={req.id}>
