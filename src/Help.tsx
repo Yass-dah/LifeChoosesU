@@ -20,10 +20,10 @@ export function Help({ request, setPage }: pageProps){
         fetch(`http://localhost:8080/hr/${currentRequest.id}/response`, {
             credentials: "include"
         }).then(res => {
-                if (!res.ok) throw new Error("Errore");
-                return res.json();
+                if(res.ok)
+                    return res.json();
             }).then(data => {
-                if(valid) {
+                if(valid && data) {
                     setCurrentRequest(prev => ({
                         ...prev,
                         aidAnswer: data.answer
@@ -34,7 +34,7 @@ export function Help({ request, setPage }: pageProps){
         return () => { valid = false };
     }
 
-    useEffect(loadAnswer, [currentRequest.id, setPage]);
+    useEffect(loadAnswer, [currentRequest.id]);
 
     function handleSubmit() {
         fetch(`http://localhost:8080/hr/${currentRequest.id}/answer`, {
@@ -93,7 +93,10 @@ export function Help({ request, setPage }: pageProps){
                 <h1 className="title is-size-4">{currentRequest.title + " from: " +
                     ((currentRequest.anonymous) ? "anonymous" : currentRequest.requester)}</h1>
                 <span className="tag is-danger mb-3">{currentRequest.urgency} URGENZA</span>
-                <p><strong>Luogo:</strong> {currentRequest.location}</p>
+                <p><strong>Luogo:</strong> {currentRequest.location + ", " + currentRequest.country}
+                    <a className="ml-2 is-size-7" href={"https://www.google.com/maps/search/?api=1&query=" +
+                        encodeURIComponent(`${currentRequest.location} ${currentRequest.country}`)}
+                    target="_blank"> cerca su Maps</a></p>
                 <p><strong>Stato:</strong> {getStatusClean(currentRequest.status)}</p>
                 <hr/>
                 <h3 className="subtitle">Descrizione</h3>
