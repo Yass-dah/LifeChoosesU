@@ -16,6 +16,7 @@ import type {HelpRequest, User, Country} from "./data/data-model.ts";
 
 import {UserAuth} from "./context/userAuth.tsx";
 import {CountriesContext} from "./context/countries.tsx";
+import {Requests} from "./Requests.tsx";
 
 interface SessionData{
     username: string;
@@ -84,6 +85,9 @@ function App(){
             break;
         case "dashboard":
             mainContent = <Dashboard setPage={setPage} setSelectedRequest={setSelectedRequest}/>
+            break;
+        case "requests":
+            mainContent = <Requests></Requests>
             break;
         default:
             mainContent = <></>;

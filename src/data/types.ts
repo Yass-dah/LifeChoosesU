@@ -14,3 +14,14 @@ export function getUrgColor(urgency: UrgencyLevel) {
 }
 
 export type ConflictStatus = "IN_ATTESA" | "IN_GESTIONE" | "RISOLTO";
+
+export function getStatusClean(s: ConflictStatus) {
+    switch(s) {
+        case "RISOLTO":
+            return s;
+        case "IN_GESTIONE":
+            return "IN GESTIONE";
+        default:
+            return "IN ATTESA";
+    }
+}

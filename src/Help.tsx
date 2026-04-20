@@ -2,6 +2,7 @@ import './App.css'
 import {useContext, useEffect, useState} from "react";
 import type { HelpRequest } from "./data/data-model.ts";
 import {UserAuth} from "./context/userAuth.tsx";
+import {getStatusClean} from "./data/types.ts";
 
 type pageProps = {
     request: HelpRequest;
@@ -93,7 +94,7 @@ export function Help({ request, setPage }: pageProps){
                     ((currentRequest.anonymous) ? "anonymous" : currentRequest.requester)}</h1>
                 <span className="tag is-danger mb-3">{currentRequest.urgency} URGENZA</span>
                 <p><strong>Luogo:</strong> {currentRequest.location}</p>
-                <p><strong>Stato:</strong> {currentRequest.status}</p>
+                <p><strong>Stato:</strong> {getStatusClean(currentRequest.status)}</p>
                 <hr/>
                 <h3 className="subtitle">Descrizione</h3>
                 <p>{currentRequest.description}</p>

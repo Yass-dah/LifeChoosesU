@@ -28,7 +28,7 @@
 .navbar .nav-buttons{
   padding: 3px;
   display: flex;
-  justify-content: space-around;
+  align-items: center;
 }
 
 .hero{

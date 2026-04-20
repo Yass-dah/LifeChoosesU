@@ -26,21 +26,38 @@ export function Navbar(setter: pageProps) {
         mainContent = <button className="button is-light is-outlined"
                               onClick={() => setter.setPage("loginR")}>Login</button>;
     else
-        mainContent = <button className="button is-light is-outlined"
-                    onClick={ handleLogout }>{ user.username }<br /> (Logout) </button>;
+        mainContent = <button className="button py-1 is-light is-outlined"
+                    onClick={ handleLogout }>Logout</button>;
 
     return (
-        <div className="navbar">
-            <h1 className="title m-2"
-                onClick={() => setter.setPage("home")}>LifeChoosesU</h1>
+        <div className="navbar"><div className="is-flex is-align-items-center m-2" style={{ gap: "10px" }}>
+            <h1 className="title m-0" onClick={() => setter.setPage("home")}>LifeChoosesU
+            </h1>{user && (<span className="tag is-rounded is-italic is-white">
+            {user.role === "MEDIATORE" ? "MEDIATOR AREA" : "HELP AREA"}</span>)}
+        </div>
             <div className="nav-buttons">
                 { setter.page !== "home" ?
                 <button className="button is-warning mx-4"
                         onClick={() => setter.setPage("home")}>Home</button> : null }
+                {(user !== null && user.role === "RICHIEDENTE") && setter.page !== "support" ?
+                    <button className="button is-success is-light mx-4"
+                            onClick={() => setter.setPage("support")}>+ Nuova richiesta</button> : null}
+                {(user !== null && user.role === "RICHIEDENTE") && setter.page !== "requests" ?
+                    <button className="button is-primary is-dark mx-4"
+                            onClick={() => setter.setPage("requests")}>Le mie richieste</button> : null}
                 {(user !== null && user.role === "MEDIATORE") && setter.page !== "dashboard" ?
-                    <button className="button is-dark mx-4"
+                    <button className="button is-black mx-4"
                             onClick={() => setter.setPage("dashboard")}>La mia dashboard</button> : null}
-                { (setter.page !== "login" && setter.page !== "register") ? mainContent : null }
+                { (setter.page !== "login" && setter.page !== "register") && (
+                    <div className="is-flex is-flex-direction-column is-align-items-center mx-0">
+                        {user && (
+                            <div className="box has-background-light px-2 py-0 mb-1 is-rounded is-size-7">
+                                👤 <strong className="has-text-black">{user.username}</strong>
+                            </div>
+                        )}
+                        {mainContent}
+                    </div>
+                )}
             </div>
         </div>
     )
