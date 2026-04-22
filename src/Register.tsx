@@ -43,7 +43,7 @@ export function Register(setter: permissionProps) {
                 role: role,
             })
         }).then(res => {
-            if(res.ok) setter.setPage(role === "RICHIEDENTE" ? "loginR" : "lohinM");
+            if(res.ok) setter.setPage(role === "RICHIEDENTE" ? "loginR" : "loginM");
             return res.text();
         }).then((data) => setError(data));
     }
