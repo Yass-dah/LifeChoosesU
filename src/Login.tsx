@@ -20,8 +20,17 @@ export function Login(setter: permissionProps){
             setError("Compila tutti i campi");
             return;
         }
-        fetch(`http://localhost:8080/session/login?username=${username}&password=${password}&role=${role}`, {
-            credentials: "include"
+        fetch(`http://localhost:8080/session/login`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                role: role
+            })
         }).then(res => res.json())
             .then(sd => {
                 if (sd.username) {

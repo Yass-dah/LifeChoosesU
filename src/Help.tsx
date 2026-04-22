@@ -58,7 +58,6 @@ export function Help({ request, setPage }: pageProps){
 
     function takeInCharge() {
         fetch(`http://localhost:8080/hr/${currentRequest.id}/assign`, {
-            method: "POST",
             credentials: "include"
         }).then(res => {
             if(!res.ok) throw new Error("Errore presa in carico");
@@ -71,7 +70,6 @@ export function Help({ request, setPage }: pageProps){
 
     function markResolved() {
         fetch(`http://localhost:8080/hr/${currentRequest.id}/resolve`, {
-            method: "POST",
             credentials: "include",
         }).then(res => {
             if(!res.ok) throw new Error("Errore risoluzione");

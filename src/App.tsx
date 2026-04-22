@@ -53,8 +53,7 @@ function App(){
         fetch("http://localhost:8080/help-requests/countries", {
             credentials: "include"
         }).then(res => res.json())
-            .then((data) => setCountries(data))
-            .catch(err => console.log(err));
+            .then((data) => setCountries(data));
     }, []);
 
     let mainContent: ReactElement;

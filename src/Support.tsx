@@ -28,13 +28,13 @@ export function Support({setPage}: pageProps) {
             },
             credentials: "include",
             body: JSON.stringify({
-                title,
-                location,
-                description,
-                type,
-                urgency,
-                country,
-                anonymous
+                title: title,
+                location: location,
+                description: description,
+                type: type,
+                urgency: urgency,
+                country: country,
+                anonymous: anonymous
             })
         }).then(res => {
                 if (!res.ok) throw new Error("Errore invio richiesta");

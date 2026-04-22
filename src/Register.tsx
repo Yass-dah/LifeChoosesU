@@ -37,10 +37,10 @@ export function Register(setter: permissionProps) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username,
-                email,
-                password,
-                role
+                username: username,
+                email: email,
+                password: password,
+                role: role,
             })
         }).then(res => {
             if(res.ok) setter.setPage(role === "RICHIEDENTE" ? "loginR" : "lohinM");

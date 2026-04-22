@@ -37,7 +37,7 @@ function ConflictCard({request, setter}: { request: HelpRequest, setter: pagePro
                 { (request.status === "IN_ATTESA") ? "Intervieni" :
                     ((request.status === "IN_GESTIONE") ? "In gestione da " +
                         ((request.mediator === user?.username) ? "te" : request.mediator)
-                        : "Risolto: " + request.aidAnswer)}
+                        : "Risolto da " + ((request.mediator === user?.username) ? "te" : request.mediator))}
             </button>
         </div>
     )
