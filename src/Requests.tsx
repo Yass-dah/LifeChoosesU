@@ -30,6 +30,24 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
         return () => { valid = false };
     }
 
+    function setAnonymous(flag: boolean) {
+        let valid = true;
+        fetch(`http://localhost:8080/hr/${currentRequest.id}/anonymous/${flag}`, {
+            credentials: "include"
+        }).then(res => {
+            if (!res.ok) throw new Error("Errore");
+            else {
+                if(valid){
+                    setCurrentRequest(prev => ({
+                        ...prev,
+                        anonymous: flag
+                    }))
+                }
+            }
+        })
+        return () => { valid = false };
+    }
+
     useEffect(loadAnswer, [currentRequest.id]);
 
     return (
@@ -42,16 +60,24 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
             <p className="mt-2"><strong>Descrizione: </strong> { currentRequest.description }</p>
             <p className="mt-2"><strong>Tipo: </strong> { currentRequest.type }</p>
             <p className="mt-2"><strong>Stato: </strong> { getStatusClean(currentRequest.status) }</p>
-            {currentRequest.mediator ? <p className="mt-2"><strong>Mediatore: </strong>{ currentRequest?.mediator }</p> : null}
-            {currentRequest.aidAnswer ?
+            { currentRequest.mediator ? <p className="mt-2"><strong>Mediatore: </strong>{ currentRequest?.mediator }</p> : null}
+            { currentRequest.aidAnswer ?
                 <div className="box mt-2">
                     <p><strong>Risposta: </strong> { currentRequest.aidAnswer }</p>
                     <p className="is-size-7 mt-1">Ultima modifica risposta: { lastTimeModified }</p>
                 </div> : null }
-            <button className="button is-link is-light mt-2"
+            <button className="button is-link is-light mt-2 mr-3"
             onClick={() => onDelete(currentRequest.id)}>
                 ELIMINA RICHIESTA 🗑️
             </button>
+            <label className="checkbox mt-4 is-small">
+            <input
+                type="checkbox"
+                checked={ currentRequest.anonymous }
+                onClick={() => setAnonymous(!currentRequest.anonymous)}
+            />
+            <span className="ml-2 is-italic is-size-7">ANONIMA</span>
+            </label>
         </div>
     )
 }

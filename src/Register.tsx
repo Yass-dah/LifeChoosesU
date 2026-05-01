@@ -11,6 +11,7 @@ function isValidEmail(email: string): boolean {
 }
 
 export function Register(setter: permissionProps) {
+    const [result, setResult] = useState<boolean>(false);
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -43,7 +44,7 @@ export function Register(setter: permissionProps) {
                 role: role,
             })
         }).then(res => {
-            if(res.ok) setter.setPage(role === "RICHIEDENTE" ? "loginR" : "loginM");
+            if(res.ok) setResult(true);
             return res.text();
         }).then((data) => setError(data));
     }
@@ -54,13 +55,15 @@ export function Register(setter: permissionProps) {
                 <h1 className="title is-size-4 has-text-centered">
                     Registrati come { role.toLowerCase() }
                 </h1>
-                <p className="has-text-danger has-text-centered mt-3 mb-3">{ error }</p>
+                <p className= {result ? "has-text-success has-text-centered mt-3 mb-3" :
+                    "has-text-danger has-text-centered mt-3 mb-3"}>{ error }</p>
                 <div className="field">
                     <label className="label">Nome utente</label>
                     <input className="input"
                            value={username}
                            placeholder="Username"
                            onChange={(e) => setUsername(e.target.value)}
+                           disabled={result}
                     />
                 </div>
                 <div className="field">
@@ -70,6 +73,7 @@ export function Register(setter: permissionProps) {
                            placeholder="Email"
                            value={email}
                            onChange={(e) => setEmail(e.target.value)}
+                           disabled={result}
                     />
                 </div>
                 <div className="field">
@@ -79,6 +83,7 @@ export function Register(setter: permissionProps) {
                            value={password}
                            placeholder="Password"
                            onChange={(e) => setPassword(e.target.value)}
+                           disabled={result}
                     />
                 </div>
                 <div className="field">
@@ -88,6 +93,7 @@ export function Register(setter: permissionProps) {
                            value={confirm}
                            placeholder="Ripeti password"
                            onChange={(e) => setConfirm(e.target.value)}
+                           disabled={result}
                     />
                 </div>
                 <div className="field">
@@ -96,6 +102,7 @@ export function Register(setter: permissionProps) {
                         <select
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
+                            disabled={result}
                         >
                             <option value="RICHIEDENTE">Richiedente</option>
                             <option value="MEDIATORE">Mediatore</option>
@@ -105,6 +112,7 @@ export function Register(setter: permissionProps) {
                 <button
                     className="button is-primary is-fullwidth"
                     onClick={handleRegister}
+                    disabled={result}
                 >
                     Registrati
                 </button>
