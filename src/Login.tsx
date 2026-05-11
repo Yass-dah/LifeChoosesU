@@ -39,7 +39,7 @@ export function Login(setter: permissionProps){
                         email: "",
                         role: sd.role
                     });
-                    setter.setPage((sd.role === "MEDIATORE") ? "dashboard" : "home");
+                    setter.setPage("home");
                 } else setError(sd.message);
             });
     }
@@ -48,7 +48,7 @@ export function Login(setter: permissionProps){
         <div className="login-container">
             <div className="login-box box">
                 <h1 className="title is-size-4 has-text-centered">Accedi come { role.toLowerCase() }</h1>
-                <p className="has-text-danger has-text-centered mt-3 mb-3">{ error }</p>
+                <p className="has-text-danger has-text-centered mt-3 mb-3 is-size-7">{ error }</p>
                 <div className="field">
                     <label className="label">Seleziona ruolo</label>
                     <div className="control">
@@ -77,7 +77,7 @@ export function Login(setter: permissionProps){
                 </div>
                 <div className="field mt-4">
                     <div className="control">
-                        <button className="button is-success is-fullwidth"
+                        <button type={"submit"} className="button is-success is-fullwidth"
                             onClick={ handleLogin }>Accedi</button>
                     </div>
                 </div>

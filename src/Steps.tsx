@@ -1,4 +1,6 @@
 import './App.css'
+import {useContext} from "react";
+import {UserAuth} from "./context/userAuth.tsx";
 
 type Step = {
     action: string
@@ -15,6 +17,8 @@ function StepCard({ action, description }: Step) {
 }
 
 export function Steps() {
+    const { user } = useContext(UserAuth);
+
     const steps: Step[] = [
         {
             action: "Segnala un conflitto",
@@ -27,12 +31,15 @@ export function Steps() {
         {
             action: "Risolvi il conflitto",
             description: "Collabora con i mediatori per una soluzione pacifica",
-        },
-    ]
+        }]
 
     return (
         <section className="steps">
-            {steps.map((step, index) => (
+            { user ?
+                <div className="step-card">
+                    <h3 className="title is-size-4 m-1">Bentornato/a 😊 {user.username}</h3>
+                </div> :
+            steps.map((step, index) => (
                 <StepCard
                     key={index}
                     action={step.action}

@@ -64,7 +64,10 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
             { currentRequest.aidAnswer ?
                 <div className="box mt-2">
                     <p><strong>Risposta: </strong> { currentRequest.aidAnswer }</p>
-                    <p className="is-size-7 mt-1">Ultima modifica risposta: { lastTimeModified }</p>
+                    <p className="is-size-7 mt-1">Ultima modifica risposta: {
+                        lastTimeModified ?
+                        new Date(lastTimeModified).toLocaleDateString("it-IT", { hour: "2-digit", minute: "2-digit"})
+                            : null}</p>
                 </div> : null }
             <button className="button is-link is-light mt-2 mr-3"
             onClick={() => onDelete(currentRequest.id)}>
@@ -72,6 +75,7 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
             </button>
             <label className="checkbox mt-4 is-small">
             <input
+                className="is-black"
                 type="checkbox"
                 checked={ currentRequest.anonymous }
                 onClick={() => setAnonymous(!currentRequest.anonymous)}

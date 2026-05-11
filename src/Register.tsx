@@ -28,6 +28,10 @@ export function Register(setter: permissionProps) {
             setError("Email non valida | sugg: example@mail.com");
             return;
         }
+        if(password.length < 8){
+            setError("La password deve contenere almeno 8 caratteri");
+            return;
+        }
         if (password !== confirm){
             setError("Le password non coincidono");
             return;
@@ -55,69 +59,58 @@ export function Register(setter: permissionProps) {
                 <h1 className="title is-size-4 has-text-centered">
                     Registrati come { role.toLowerCase() }
                 </h1>
-                <p className= {result ? "has-text-success has-text-centered mt-3 mb-3" :
-                    "has-text-danger has-text-centered mt-3 mb-3"}>{ error }</p>
-                <div className="field">
+                <p className= {result ? "has-text-success has-text-centered mt-3 mb-3 is-size-6" :
+                    "has-text-danger has-text-centered mt-3 mb-3 is-size-7"}>{ error }</p>
+                <div className={result ? "field is-hidden" : "field"}>
                     <label className="label">Nome utente</label>
                     <input className="input"
+                           type="text"
                            value={username}
                            placeholder="Username"
-                           onChange={(e) => setUsername(e.target.value)}
-                           disabled={result}
-                    />
+                           onChange={(e) => setUsername(e.target.value)}/>
                 </div>
-                <div className="field">
+                <div className={result ? "field is-hidden" : "field"}>
                     <label className="label">Email</label>
                     <input className="input"
                            type="email"
                            placeholder="Email"
                            value={email}
-                           onChange={(e) => setEmail(e.target.value)}
-                           disabled={result}
-                    />
+                           onChange={(e) => setEmail(e.target.value)}/>
                 </div>
-                <div className="field">
+                <div className={result ? "field is-hidden" : "field"}>
                     <label className="label">Password</label>
                     <input className="input"
                            type="password"
                            value={password}
                            placeholder="Password"
-                           onChange={(e) => setPassword(e.target.value)}
-                           disabled={result}
-                    />
+                           onChange={(e) => setPassword(e.target.value)}/>
                 </div>
-                <div className="field">
+                <div className={result ? "field is-hidden" : "field"}>
                     <label className="label">Conferma password</label>
                     <input className="input"
                            type="password"
                            value={confirm}
                            placeholder="Ripeti password"
-                           onChange={(e) => setConfirm(e.target.value)}
-                           disabled={result}
-                    />
+                           onChange={(e) => setConfirm(e.target.value)}/>
                 </div>
-                <div className="field">
+                <div className={result ? "field is-hidden" : "field"}>
                     <label className="label">Tipo account</label>
                     <div className="select is-fullwidth">
                         <select
                             value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            disabled={result}
-                        >
+                            onChange={(e) => setRole(e.target.value)}>
                             <option value="RICHIEDENTE">Richiedente</option>
                             <option value="MEDIATORE">Mediatore</option>
                         </select>
                     </div>
                 </div>
                 <button
-                    className="button is-primary is-fullwidth"
-                    onClick={handleRegister}
-                    disabled={result}
-                >
+                    className={result ? "button is-primary is-fullwidth is-hidden" : "button is-primary is-fullwidth"}
+                    onClick={handleRegister}>
                     Registrati
                 </button>
                 <p className="has-text-centered mt-3">
-                    Hai già un account?
+                    { result ? null : "Hai già un account?" }
                     <a onClick={() => setter.setPage(role === "RICHIEDENTE" ? "loginR" : "loginM")}> Accedi</a>
                 </p>
             </div>

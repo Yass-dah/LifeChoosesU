@@ -1,4 +1,4 @@
-import type { Country } from "../data/data-model.ts";
+import type {Country} from "../data/data-model.ts";
 import {createContext} from "react";
 
 interface CountriesContextType {
