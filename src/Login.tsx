@@ -77,7 +77,7 @@ export function Login(setter: permissionProps){
                 </div>
                 <div className="field mt-4">
                     <div className="control">
-                        <button type={"submit"} className="button is-success is-fullwidth"
+                        <button className="button is-success is-fullwidth"
                             onClick={ handleLogin }>Accedi</button>
                     </div>
                 </div>
