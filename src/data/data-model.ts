@@ -3,11 +3,16 @@ import {type ConflictType, type UrgencyLevel, type ConflictStatus} from "./types
 export type Country = {
     name: string;
     flag: string;
+    continent: string;
+    language: string;
+    emergencyNumber: string;
+    conflictQt: number;
 }
 
 export interface User {
     username: string;
     email: string;
+    country: Country;
     role: 'RICHIEDENTE' | 'MEDIATORE';
 }
 
@@ -26,6 +31,7 @@ export interface HelpRequest {
     aidAnswer?: string;
 }
 
+// conflict model usato per test statico ad inizio progetto
 export interface Mediator extends User {
     role: 'MEDIATORE';
     assignedConflicts: number[];

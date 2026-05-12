@@ -21,6 +21,7 @@ import {Requests} from "./Requests.tsx";
 interface SessionData{
     username: string;
     role: string;
+    country: Country;
     message: string;
 }
 
@@ -40,6 +41,7 @@ function App(){
                     setUser(sd.username ?
                         { username: sd.username,
                             email: "",
+                            country: sd.country,
                             role: sd.role as 'MEDIATORE' | 'RICHIEDENTE'}
                         : null);
                 }

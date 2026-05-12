@@ -5,6 +5,7 @@ import {useContext, useState} from "react";
 import * as React from "react";
 import {UserAuth} from "./context/userAuth.tsx";
 import type {Country} from "./data/data-model.ts";
+import {CountriesContext} from "./context/countries.tsx";
 
 type categories = "country" | "type" | "urgency";
 
@@ -47,7 +48,10 @@ function CountryCard({country, setter}: { country: Country, setter: pageProps })
                 <div className="country-content">
                     <div className="country-info">
                         <h3 className="title is-5">{ country.name + " " + country.flag }</h3>
-                        <p>Conflitti sociali e episodi di bullismo</p>
+                        <p className="is-size-6">
+                            <span className="has-text-primary">{ (country.conflictQt ? "•" : "") } </span>
+                            { country.conflictQt + " " +
+                            (country.conflictQt === 1 ? "conflitto presente" : "conflitti presenti")}</p>
                         <button className="button is-light mt-3"
                             onClick={() =>
                                 { if(user === null || user.role !== "MEDIATORE")
@@ -57,7 +61,7 @@ function CountryCard({country, setter}: { country: Country, setter: pageProps })
                                 }}>Visualizza dettagli</button>
                     </div>
                     <div className="country-image">
-                        <img src={`/countries/${country.name}.jpg`} alt={ country.name } />
+                        <img src={`/countries/${country.name}.jpg`} alt={ country.name }/>
                     </div>
                 </div>
             </div>
@@ -111,21 +115,12 @@ function UrgencyCard({urgency, setter}: { urgency: UrgencyLevel, setter: pagePro
     )
 }
 
-function getCards(category: categories, setter: pageProps){
+function getCards(countries: Country[], category: categories, setter: pageProps){
     const mainContent = [];
     if(category === "country"){
         /* fatta a mano solo per migliore visualizzazione con immagini scaricate, possibile iterarlo(map) */
-        mainContent.push(<CountryCard key={0} country={{name: "Italia", flag: "🇮🇹"}} setter={setter} />);
-        mainContent.push(<CountryCard key={1} country={{name: "Ucraina", flag: "🇺🇦"}} setter={setter} />);
-        mainContent.push(<CountryCard key={2} country={{name: "Palestina", flag: "🇵🇸"}} setter={setter} />);
-        mainContent.push(<CountryCard key={3} country={{name: "Libano", flag: "🇱🇧"}} setter={setter} />);
-        mainContent.push(<CountryCard key={4} country={{name: "Siria", flag: "🇸🇾"}} setter={setter}/>);
-        mainContent.push(<CountryCard key={5} country={{name: "Sudan", flag: "🇸🇩"}} setter={setter} />);
-        mainContent.push(<CountryCard key={6} country={{name: "Afghanistan", flag: "🇦🇫"}} setter={setter} />);
-        mainContent.push(<CountryCard key={7} country={{name: "Iran", flag: "🇮🇷"}} setter={setter} />);
-        mainContent.push(<CountryCard key={8} country={{name: "Yemen", flag: "🇾🇪"}} setter={setter}/>);
-        mainContent.push(<CountryCard key={9} country={{name: "Libia", flag: "🇱🇾"}} setter={setter}/>);
-        mainContent.push(<CountryCard key={10} country={{name: "Cuba", flag: "🇨🇺"}} setter={setter}/>);
+        countries.map((c) =>
+            mainContent.push(<CountryCard key={c.name} country={c} setter={setter}/>));
     }
     else if(category === "type"){
         mainContent.push(<TypeCard key={11} type={"FAMILIARE"} setter={setter} />);
@@ -143,12 +138,13 @@ function getCards(category: categories, setter: pageProps){
 }
 
 export function Explore(setter: pageProps){
+    const { countries } = useContext(CountriesContext);
     const [group, setGroup] = useState<categories>("country");
     return (
         <div className="explore-container container mt-5">
             <FilterBox setGroup={ setGroup }/>
             <div className="columns is-multiline">
-                { getCards(group, setter) }
+                { getCards(countries, group, setter) }
             </div>
         </div>
     )

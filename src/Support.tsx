@@ -39,7 +39,7 @@ export function Support({setPage}: pageProps) {
         }).then(res => {
                 if (!res.ok) throw new Error("Errore invio richiesta");
                 return res.json();
-            }).then(() => { setPage("home");})
+            }).then(() => { setPage("requests");})
     }
 
     if(user === null || user.role !== "RICHIEDENTE")

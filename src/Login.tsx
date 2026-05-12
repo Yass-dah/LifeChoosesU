@@ -12,7 +12,7 @@ export function Login(setter: permissionProps){
 
     const [ username, setUsername ] = useState("");
     const [ password, setPassword ] = useState("");
-    const [ role, setRole ] = useState<string>(setter.role);
+    const [ role, setRole ] = useState<"RICHIEDENTE" | "MEDIATORE">(setter.role);
     const [ error, setError ] = useState<string | null>(null);
 
     function handleLogin() {
@@ -37,6 +37,7 @@ export function Login(setter: permissionProps){
                     setUser({
                         username: sd.username,
                         email: "",
+                        country: sd.country,
                         role: sd.role
                     });
                     setter.setPage("home");
@@ -53,7 +54,8 @@ export function Login(setter: permissionProps){
                     <label className="label">Seleziona ruolo</label>
                     <div className="control">
                         <div className="select is-fullwidth">
-                            <select onChange={ (e) => setRole(e.target.value) }
+                            <select onChange={ (e) =>
+                                setRole(e.target.value as ("RICHIEDENTE" | "MEDIATORE")) }
                             defaultValue={role}>
                                 <option value="RICHIEDENTE">Richiedente supporto</option>
                                 <option value="MEDIATORE">Mediatore</option>

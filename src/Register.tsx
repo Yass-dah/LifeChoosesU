@@ -1,5 +1,6 @@
 import './App.css'
-import { useState } from "react";
+import {useContext, useState} from "react";
+import {CountriesContext} from "./context/countries.tsx";
 
 type permissionProps = {
     role: "RICHIEDENTE" | "MEDIATORE",
@@ -11,12 +12,15 @@ function isValidEmail(email: string): boolean {
 }
 
 export function Register(setter: permissionProps) {
+    const { countries } = useContext(CountriesContext);
+
     const [result, setResult] = useState<boolean>(false);
     const [username, setUsername] = useState("");
+    const [country, setCountry] = useState<string>("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
-    const [role, setRole] = useState<string>(setter.role);
+    const [role, setRole] = useState<"RICHIEDENTE" | "MEDIATORE">(setter.role);
     const [error, setError] = useState<string | null>("");
 
     function handleRegister() {
@@ -69,6 +73,21 @@ export function Register(setter: permissionProps) {
                            placeholder="Username"
                            onChange={(e) => setUsername(e.target.value)}/>
                 </div>
+                <div className={result || role === "RICHIEDENTE" ? "field is-hidden" : "field"}>
+                    <label className="label">Paese</label>
+                    <div className="select is-fullwidth">
+                        <select value={country}
+                                onChange={ (e) =>
+                                    setCountry(e.target.value)
+                                }>
+                            {countries.map((c) => (
+                                <option key={c.name} value={c.name}>
+                                    {c.name + " " + c.flag}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
                 <div className={result ? "field is-hidden" : "field"}>
                     <label className="label">Email</label>
                     <input className="input"
@@ -98,7 +117,8 @@ export function Register(setter: permissionProps) {
                     <div className="select is-fullwidth">
                         <select
                             value={role}
-                            onChange={(e) => setRole(e.target.value)}>
+                            onChange={(e) =>
+                                setRole(e.target.value as ("RICHIEDENTE" | "MEDIATORE"))}>
                             <option value="RICHIEDENTE">Richiedente</option>
                             <option value="MEDIATORE">Mediatore</option>
                         </select>
