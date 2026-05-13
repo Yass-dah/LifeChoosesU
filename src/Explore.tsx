@@ -47,18 +47,22 @@ function CountryCard({country, setter}: { country: Country, setter: pageProps })
             <div className="country-card box">
                 <div className="country-content">
                     <div className="country-info">
-                        <h3 className="title is-5">{ country.name + " " + country.flag }</h3>
+                        <h2 className="title is-5 mb-1">{ country.name + " " + country.flag }</h2>
                         <p className="is-size-6">
                             <span className="has-text-primary">{ (country.conflictQt ? "•" : "") } </span>
                             { country.conflictQt + " " +
-                            (country.conflictQt === 1 ? "conflitto presente" : "conflitti presenti")}</p>
+                                (country.conflictQt === 1 ? "conflitto presente" : "conflitti presenti")}</p>
+                        <hr/>
+                        <p className="is-size-6"><strong>Continente :</strong> { country.continent }</p>
+                        <p className="is-size-6"><strong>Lingua :</strong> { country.language }</p>
+                        <p className="is-size-6"><strong>Numero d'emergenza :</strong> { country.emergencyNumber }</p>
                         <button className="button is-light mt-3"
                             onClick={() =>
                                 { if(user === null || user.role !== "MEDIATORE")
                                     setter.setPage("loginM");
-                                else
+                                else{
                                     setter.setPage("dashboard");
-                                }}>Visualizza dettagli</button>
+                                }}}>Visualizza dettagli</button>
                     </div>
                     <div className="country-image">
                         <img src={`/countries/${country.name}.jpg`} alt={ country.name }/>

@@ -85,7 +85,9 @@ function App(){
             mainContent = <Explore setPage={setPage}/>
             break;
         case "dashboard":
-            mainContent = <Dashboard setPage={setPage} setSelectedRequest={setSelectedRequest}/>
+            mainContent = <Dashboard
+                setPage={setPage}
+                setSelectedRequest={setSelectedRequest}/>
             break;
         case "requests":
             mainContent = <Requests></Requests>

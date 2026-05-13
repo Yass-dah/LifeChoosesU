@@ -103,7 +103,7 @@
 }
 
 .country-card, .type-card, .urgency-card {
-  height: 180px;
+  min-height: 180px;
 }
 
 .country-content, .type-card, .urgency-card {
