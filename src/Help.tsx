@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from "react";
 import type { HelpRequest } from "./data/data-model.ts";
 import {UserAuth} from "./context/userAuth.tsx";
 import {getStatusClean} from "./data/types.ts";
+import {CountriesContext} from "./context/countries.tsx";
 
 type pageProps = {
     request: HelpRequest;
@@ -11,6 +12,7 @@ type pageProps = {
 
 export function Help({ request, setPage }: pageProps){
     const { user } = useContext(UserAuth);
+    const { countries } = useContext(CountriesContext);
 
     const [currentRequest, setCurrentRequest] = useState<HelpRequest>(request);
     const [answer, setAnswer] = useState(currentRequest.aidAnswer || "");
@@ -92,9 +94,15 @@ export function Help({ request, setPage }: pageProps){
                     ((currentRequest.anonymous) ? "anonymous" : currentRequest.requester)}</h1>
                 <span className="tag is-danger mb-3">{currentRequest.urgency} URGENZA</span>
                 <p><strong>Luogo:</strong> {currentRequest.location + ", " + currentRequest.country}
+                <span className="is-size-7 is-italic has-text-danger"> (sos num:
+                    <span className="is-bold has-text-danger">📞  
+                        { countries.find(c => c.name === currentRequest.country as never)?.emergencyNumber })
+                    </span>
+                </span>
                     <a className="ml-2 is-size-7" href={"https://www.google.com/maps/search/?api=1&query=" +
                         encodeURIComponent(`${currentRequest.location} ${currentRequest.country}`)}
-                    target="_blank"> cerca su Maps</a></p>
+                       target="_blank"> cerca su Maps</a>
+                </p>
                 <p><strong>Stato:</strong> {getStatusClean(currentRequest.status)}</p>
                 <hr/>
                 <h3 className="subtitle">Descrizione</h3>

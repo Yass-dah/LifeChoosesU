@@ -185,6 +185,7 @@ export function Dashboard(setter: pageProps) {
             <FilterBox setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
             <h1 className="title">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">
+                { !filteredRequests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
                 {filteredRequests.map(req => (
                     <div className="column is-half" key={req.id}>
                         <ConflictCard request={req} setter={setter}/>
