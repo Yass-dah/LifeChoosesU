@@ -51,8 +51,9 @@ export function Navbar(setter: pageProps) {
                 { (setter.page !== "login" && setter.page !== "register") && (
                     <div className="is-flex is-flex-direction-column is-align-items-center mx-0">
                         {user && (
-                            <div className="box has-background-light px-2 py-0 mb-1 is-rounded is-size-7">
-                                👤 <strong className="has-text-black">{user.username}</strong>
+                            <div className="box has-background-light px-2 py-0 mb-1 is-rounded is-size-7 is-flex is-align-items-center">
+                                 <img className="image is-16x16 mr-2" src="/user.png" alt=""/>
+                                <strong className="has-text-black">{user.username}</strong>
                             </div>
                         )}
                         {mainContent}

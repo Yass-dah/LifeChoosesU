@@ -37,7 +37,7 @@ export function Steps() {
         <section className="steps">
             { user ?
                 <div className="step-card">
-                    <h3 className="title is-size-4 m-1">Bentornato/a 😊 {user.username}</h3>
+                    <h3 className="title is-size-5 m-1">Bentornato/a 😊 {user.username}</h3>
                 </div> :
             steps.map((step, index) => (
                 <StepCard
