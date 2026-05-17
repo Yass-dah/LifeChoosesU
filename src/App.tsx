@@ -93,7 +93,14 @@ function App(){
         case "dashboard":
             mainContent = <Dashboard
                 setPage={setPage}
-                setSelectedRequest={setSelectedRequest}/>
+                setSelectedRequest={setSelectedRequest}
+                dashFilter={"MIE"}/>
+            break;
+        case "dashboard*":
+            mainContent = <Dashboard
+                setPage={setPage}
+                setSelectedRequest={setSelectedRequest}
+                dashFilter={"*"}/>
             break;
         case "requests":
             mainContent = <Requests></Requests>

@@ -61,7 +61,7 @@ function CountryCard({country, setter}: { country: Country, setter: pageProps })
                                 { if(user === null || user.role !== "MEDIATORE")
                                     setter.setPage("loginM");
                                 else{
-                                    setter.setPage("dashboard");
+                                    setter.setPage("dashboard*");
                                 }}}>Visualizza dettagli</button>
                     </div>
                     <div className="country-image">

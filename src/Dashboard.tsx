@@ -7,6 +7,7 @@ import { CountriesContext, getFlag } from "./context/countries.tsx";
 
 type pageProps = {
     setSelectedRequest: (req: HelpRequest) => void,
+    dashFilter: "*" | "MIE";
     setPage: (page: string) => void;
 }
 
@@ -43,7 +44,10 @@ function ConflictCard({request, setter}: { request: HelpRequest, setter: pagePro
     )
 }
 
-function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (filter: "*" | "MIE") => void, modelFilter: modelFilter,
+function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
+    dashFilter: "*" | "MIE",
+    setFilter: (filter: "*" | "MIE") => void,
+    modelFilter: modelFilter,
     setModelFilter: (value: modelFilter) => void}) {
     const { countries } = useContext(CountriesContext);
     return (
@@ -121,12 +125,13 @@ function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (fil
                     <label className="label">Visualizza</label>
                     <div className="control">
                         <label className="radio mr-3">
-                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }/>
+                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }
+                                   defaultChecked={dashFilter === "*"}/>
                             Tutte
                         </label>
-                        <label className="radio">
+                        <label className="radio" >
                             <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("MIE") }
-                            defaultChecked/>
+                                   defaultChecked={dashFilter === "MIE"}/>
                             Solo le mie mediazioni
                         </label>
                     </div>
@@ -138,7 +143,7 @@ function FilterBox({ setFilter, modelFilter, setModelFilter }: { setFilter: (fil
 
 export function Dashboard(setter: pageProps) {
     const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: "", urgency: "",status: "",country: ""});
-    const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">("MIE");
+    const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">(setter.dashFilter);
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
     const { user } = useContext(UserAuth);
 
@@ -184,7 +189,7 @@ export function Dashboard(setter: pageProps) {
     );
     return (
         <div className="container mt-5">
-            <FilterBox setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
+            <FilterBox dashFilter={dashFilter} setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
             <h1 className="title">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">
                 { !filteredRequests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
