@@ -32,7 +32,8 @@ export function Help({ request, setPage }: pageProps){
                     }));
                     setAnswer(data.answer);
                 }
-            });
+            })
+            .catch(err => console.log("Loading answer: " + err));
         return () => { valid = false };
     }
 
@@ -55,7 +56,7 @@ export function Help({ request, setPage }: pageProps){
                 aidAnswer: answer
             })))
             setPage("dashboard");
-        });
+        }).catch(err => console.log("Submit answer: " + err));
     }
 
     function takeInCharge() {
@@ -67,7 +68,7 @@ export function Help({ request, setPage }: pageProps){
                 ...prev,
                 status: "IN_GESTIONE"
             })))
-        });
+        }).catch(err => console.log("Take in charge: " + err));
     }
 
     function markResolved() {
@@ -80,7 +81,7 @@ export function Help({ request, setPage }: pageProps){
                 status: "RISOLTO"
             })))
             setPage("dashboard");
-        });
+        }).catch(err => console.log("Mark resolved: " + err));
     }
 
     if (user === null || user.role !== "MEDIATORE")

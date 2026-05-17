@@ -3,7 +3,7 @@ import {type ConflictStatus, type ConflictType, getUrgColor, type UrgencyLevel} 
 import type {Country, HelpRequest} from "./data/data-model.ts";
 import {useContext, useEffect, useState} from "react";
 import { UserAuth } from "./context/userAuth.tsx";
-import {CountriesContext, getFlag} from "./context/countries.tsx";
+import { CountriesContext, getFlag } from "./context/countries.tsx";
 
 type pageProps = {
     setSelectedRequest: (req: HelpRequest) => void,
@@ -152,6 +152,7 @@ export function Dashboard(setter: pageProps) {
                 if(valid)
                     setRequests(data)
             })
+            .catch(err => console.log("Loading requests: " + err));
         return () => { valid = false };
     }
 
@@ -164,7 +165,8 @@ export function Dashboard(setter: pageProps) {
             .then((data) => {
                 if(valid)
                     setRequests(data)
-            });
+            })
+            .catch(err => console.log("Loading my requests: " + err));
         return () => { valid = false };
     }
 

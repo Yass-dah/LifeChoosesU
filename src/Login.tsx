@@ -42,7 +42,7 @@ export function Login(setter: permissionProps){
                     });
                     setter.setPage("home");
                 } else setError(sd.message);
-            });
+            }).catch(err => console.log("Login: " + err));
     }
 
     return (

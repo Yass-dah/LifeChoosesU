@@ -40,6 +40,7 @@ export function Support({setPage}: pageProps) {
                 if (!res.ok) throw new Error("Errore invio richiesta");
                 return res.json();
             }).then(() => { setPage("requests");})
+            .catch(err => console.log("Submit request: " + err));
     }
 
     if(user === null || user.role !== "RICHIEDENTE")

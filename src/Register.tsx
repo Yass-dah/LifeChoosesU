@@ -54,7 +54,8 @@ export function Register(setter: permissionProps) {
         }).then(res => {
             if(res.ok) setResult(true);
             return res.text();
-        }).then((data) => setError(data));
+        }).then((data) => setError(data))
+            .catch(err => console.log("Register: " + err));
     }
 
     return (

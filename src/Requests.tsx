@@ -26,7 +26,7 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
                 }));
                 setLastTimeModified(data.modifiedAt);
             }
-        });
+        }).catch(err => console.log("Loading answer: " + err));
         return () => { valid = false };
     }
 
@@ -44,7 +44,7 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
                     }))
                 }
             }
-        })
+        }).catch(err => console.log("Set anonym: " + err));
         return () => { valid = false };
     }
 
@@ -100,7 +100,7 @@ export function Requests() {
             .then((data) => {
                 if(valid)
                     setRequests(data)
-            })
+            }).catch(err => console.log("Loading requests: " + err));
         return () => { valid = false };
     }
 
@@ -111,7 +111,7 @@ export function Requests() {
         }).then(res => {
             if (res.ok)
                 setRequests(prev => prev.filter(r => r.id !== id));
-        });
+        }).catch(err => console.log("Delete request: " + err));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

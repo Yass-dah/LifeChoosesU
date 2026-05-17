@@ -18,7 +18,8 @@ export function Navbar(setter: pageProps) {
                 if (!sd.username) {
                     setUser(null);
                     setter.setPage("home");
-                }});
+                }})
+            .catch(err => console.log("Logout: " + err));
     }
 
     let mainContent: ReactElement;

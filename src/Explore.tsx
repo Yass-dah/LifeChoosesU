@@ -122,8 +122,7 @@ function UrgencyCard({urgency, setter}: { urgency: UrgencyLevel, setter: pagePro
 function getCards(countries: Country[], category: categories, setter: pageProps){
     const mainContent = [];
     if(category === "country"){
-        /* fatta a mano solo per migliore visualizzazione con immagini scaricate, possibile iterarlo(map) */
-        countries.map((c) =>
+        countries.sort((a, b) => b.conflictQt - a.conflictQt).map((c) =>
             mainContent.push(<CountryCard key={c.name} country={c} setter={setter}/>));
     }
     else if(category === "type"){

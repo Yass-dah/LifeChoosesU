@@ -44,8 +44,10 @@ function App(){
                             country: sd.country,
                             role: sd.role as 'MEDIATORE' | 'RICHIEDENTE'}
                         : null);
+                    console.log(sd.username, sd.country);
                 }
-            });
+            })
+            .catch(err => console.log("Checking conn: " + err));
         return () => { valid = false;};
     }
 
@@ -58,7 +60,8 @@ function App(){
             .then((data) => {
                 console.log(data);
                 setCountries(data)
-            });
+            })
+            .catch(err => console.log("Loading countries: " + err));
     }, []);
 
     let mainContent: ReactElement;
