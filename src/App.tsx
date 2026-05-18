@@ -30,6 +30,7 @@ function App(){
     const [page, setPage] = useState("home");
     const [selectedRequest, setSelectedRequest] = useState<HelpRequest | null>(null);
     const [countries, setCountries] = useState<Country[]>([]);
+    const [countryFilter, setCountryFilter] = useState<Country | "">("");
 
     function checkConnection(){
         let valid = true;
@@ -44,7 +45,6 @@ function App(){
                             country: sd.country,
                             role: sd.role as 'MEDIATORE' | 'RICHIEDENTE'}
                         : null);
-                    console.log(sd.username, sd.country);
                 }
             })
             .catch(err => console.log("Checking conn: " + err));
@@ -57,10 +57,7 @@ function App(){
         fetch("http://localhost:8080/help-requests/countries", {
             credentials: "include"
         }).then(res => res.json())
-            .then((data) => {
-                console.log(data);
-                setCountries(data)
-            })
+            .then((data) => setCountries(data))
             .catch(err => console.log("Loading countries: " + err));
     }, []);
 
@@ -88,19 +85,21 @@ function App(){
             mainContent = <Support setPage={setPage}/>
             break;
         case "explore":
-            mainContent = <Explore setPage={setPage}/>
+            mainContent = <Explore setPage={setPage} setCountryFilter={setCountryFilter}/>
             break;
         case "dashboard":
             mainContent = <Dashboard
                 setPage={setPage}
                 setSelectedRequest={setSelectedRequest}
-                dashFilter={"MIE"}/>
+                dashFilter={"MIE"}
+                countryFilter={""}/>
             break;
         case "dashboard*":
             mainContent = <Dashboard
                 setPage={setPage}
                 setSelectedRequest={setSelectedRequest}
-                dashFilter={"*"}/>
+                dashFilter={"*"}
+                countryFilter={countryFilter}/>
             break;
         case "requests":
             mainContent = <Requests></Requests>

@@ -5,10 +5,11 @@ import {useContext, useEffect, useState} from "react";
 import { UserAuth } from "./context/userAuth.tsx";
 import { CountriesContext, getFlag } from "./context/countries.tsx";
 
-type pageProps = {
+type dashProps = {
     setSelectedRequest: (req: HelpRequest) => void,
     dashFilter: "*" | "MIE";
     setPage: (page: string) => void;
+    countryFilter: Country | "";
 }
 
 type modelFilter = {
@@ -18,7 +19,7 @@ type modelFilter = {
     country: Country | "";
 }
 
-function ConflictCard({request, setter}: { request: HelpRequest, setter: pageProps}) {
+function ConflictCard({request, dashProps}: { request: HelpRequest, dashProps: dashProps}) {
     const { user } = useContext(UserAuth);
     const { countries } = useContext(CountriesContext);
     const urgClass = ["tag","mb-2"];
@@ -33,8 +34,8 @@ function ConflictCard({request, setter}: { request: HelpRequest, setter: pagePro
             <p className="mt-2">{ request.description }</p>
             <button className="button is-link is-light mt-3" disabled={reqDone}
             onClick={ () => {
-                setter.setSelectedRequest(request)
-                setter.setPage("help") }}>
+                dashProps.setSelectedRequest(request)
+                dashProps.setPage("help") }}>
                 { (request.status === "IN_ATTESA") ? "Intervieni" :
                     ((request.status === "IN_GESTIONE") ? "In gestione da " +
                         ((request.mediator === user?.username) ? "te" : request.mediator)
@@ -102,36 +103,39 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
                             <option value="RISOLTO">Risolto</option>
                         </select>
                     </div>
-                </div>
-                <div className="column is-3">
-                    <label className="label">Paese</label>
-                    <div className="select is-fullwidth">
-                        <select onChange={ (e) =>
-                            setModelFilter({type: modelFilter.type,
+                </div><div className="column is-3">
+                <label className="label">Paese</label>
+                <div className="select is-fullwidth">
+                    <select value={modelFilter.country !== "" ? modelFilter.country.name : ""}
+                        onChange={(e) =>
+                            setModelFilter({
+                                type: modelFilter.type,
                                 urgency: modelFilter.urgency,
                                 status: modelFilter.status,
-                                country: e.target.value as Country | ""})
-                        }>
-                            <option value="">Tutti</option>
-                            {countries.map((c) => (
-                                <option key={c.name} value={c.name}>
-                                    {c.name + " " + c.flag}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                                country: e.target.value as Country | ""
+                            })
+                        }
+                    >
+                        <option value="">Tutti</option>
+                        {countries.map((c) => (
+                            <option key={c.name} value={c.name}>
+                                {c.name + " " + c.flag}
+                            </option>
+                        ))}
+                    </select>
                 </div>
+            </div>
                 <div className="column is-4">
                     <label className="label">Visualizza</label>
                     <div className="control">
                         <label className="radio mr-3">
-                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("*") }
-                                   defaultChecked={dashFilter === "*"}/>
+                            <input className="mr-2" type="radio" name="filter" onChange={ () => setFilter("*") }
+                                   checked={dashFilter === "*"}/>
                             Tutte
                         </label>
                         <label className="radio" >
-                            <input className="mr-2" type="radio" name="filter" onClick={ () => setFilter("MIE") }
-                                   defaultChecked={dashFilter === "MIE"}/>
+                            <input className="mr-2" type="radio" name="filter" onChange={ () => setFilter("MIE") }
+                                   checked={dashFilter === "MIE"}/>
                             Solo le mie mediazioni
                         </label>
                     </div>
@@ -141,9 +145,9 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
     )
 }
 
-export function Dashboard(setter: pageProps) {
-    const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: "", urgency: "",status: "",country: ""});
-    const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">(setter.dashFilter);
+export function Dashboard(dashProps: dashProps) {
+    const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: "", urgency: "",status: "",country: dashProps.countryFilter});
+    const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">(dashProps.dashFilter);
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
     const { user } = useContext(UserAuth);
 
@@ -185,7 +189,7 @@ export function Dashboard(setter: pageProps) {
         (modelFilter.type === "" || modelFilter.type === req.type) &&
         (modelFilter.urgency === "" || modelFilter.urgency === req.urgency) &&
         (modelFilter.status === "" || modelFilter.status === req.status) &&
-        (modelFilter.country === "" || modelFilter.country === req.country)
+        (modelFilter.country === "" || modelFilter.country.name === req.country as never)
     );
     return (
         <div className="container mt-5">
@@ -195,7 +199,7 @@ export function Dashboard(setter: pageProps) {
                 { !filteredRequests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
                 {filteredRequests.map(req => (
                     <div className="column is-half" key={req.id}>
-                        <ConflictCard request={req} setter={setter}/>
+                        <ConflictCard request={req} dashProps={dashProps}/>
                     </div>
                 ))}
             </div>

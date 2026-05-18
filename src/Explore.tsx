@@ -11,6 +11,7 @@ type categories = "country" | "type" | "urgency";
 
 type pageProps = {
     setPage: (page: string) => void;
+    setCountryFilter: (filter: Country | "") => void;
 }
 
 type groupProp = {
@@ -61,6 +62,7 @@ function CountryCard({country, setter}: { country: Country, setter: pageProps })
                                 { if(user === null || user.role !== "MEDIATORE")
                                     setter.setPage("loginM");
                                 else{
+                                    setter.setCountryFilter(country);
                                     setter.setPage("dashboard*");
                                 }}}>Visualizza dettagli</button>
                     </div>
