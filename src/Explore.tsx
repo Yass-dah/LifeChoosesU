@@ -12,6 +12,8 @@ type categories = "country" | "type" | "urgency";
 type pageProps = {
     setPage: (page: string) => void;
     setCountryFilter: (filter: Country | "") => void;
+    setTypeFilter: (filter: ConflictType | "") => void;
+    setUrgencyFilter: (filter: UrgencyLevel | "") => void;
 }
 
 type groupProp = {
@@ -62,6 +64,8 @@ function CountryCard({country, setter}: { country: Country, setter: pageProps })
                                 { if(user === null || user.role !== "MEDIATORE")
                                     setter.setPage("loginM");
                                 else{
+                                    setter.setTypeFilter("");
+                                    setter.setUrgencyFilter("");
                                     setter.setCountryFilter(country);
                                     setter.setPage("dashboard*");
                                 }}}>Visualizza dettagli</button>
@@ -88,9 +92,12 @@ function TypeCard({type, setter}: { type: ConflictType, setter: pageProps}){
                         onClick={() =>
                         { if(user === null || user.role !== "MEDIATORE")
                             setter.setPage("loginM");
-                        else
-                            setter.setPage("dashboard");
-                        }}>Visualizza dettagli</button>
+                        else{
+                            setter.setUrgencyFilter("");
+                            setter.setCountryFilter("");
+                            setter.setTypeFilter(type);
+                            setter.setPage("dashboard*");
+                        }}}>Visualizza dettagli</button>
                     </div>
                 </div>
             </div>
@@ -111,9 +118,12 @@ function UrgencyCard({urgency, setter}: { urgency: UrgencyLevel, setter: pagePro
                         onClick={ () =>
                         { if(user === null || user.role !== "MEDIATORE")
                                 setter.setPage("loginM");
-                            else
-                                setter.setPage("dashboard");
-                        }}>Visualizza dettagli</button>
+                            else{
+                                setter.setTypeFilter("");
+                                setter.setCountryFilter("");
+                                setter.setUrgencyFilter(urgency);
+                                setter.setPage("dashboard*");
+                        }}}>Visualizza dettagli</button>
                     </div>
                 </div>
             </div>

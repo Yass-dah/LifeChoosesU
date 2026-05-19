@@ -10,6 +10,8 @@ type dashProps = {
     dashFilter: "*" | "MIE";
     setPage: (page: string) => void;
     countryFilter: Country | "";
+    typeFilter: ConflictType | "";
+    urgencyFilter: UrgencyLevel | "";
 }
 
 type modelFilter = {
@@ -57,7 +59,8 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
                 <div className="column is-3">
                     <label className="label">Tipo</label>
                     <div className="select is-fullwidth">
-                        <select onChange={ (e) =>
+                        <select value={modelFilter.type}
+                            onChange={ (e) =>
                             setModelFilter({type: e.target.value as ConflictType | "",
                                 urgency: modelFilter.urgency,
                                 status: modelFilter.status,
@@ -75,7 +78,8 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
                 <div className="column is-3">
                     <label className="label">Urgenza</label>
                     <div className="select is-fullwidth">
-                        <select onChange={ (e) =>
+                        <select value={modelFilter.urgency}
+                            onChange={ (e) =>
                             setModelFilter({type: modelFilter.type,
                                 urgency: e.target.value as UrgencyLevel | "",
                                 status: modelFilter.status,
@@ -146,7 +150,10 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
 }
 
 export function Dashboard(dashProps: dashProps) {
-    const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: "", urgency: "",status: "",country: dashProps.countryFilter});
+    const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: dashProps.typeFilter,
+        urgency: dashProps.urgencyFilter,
+        status: "",
+        country: dashProps.countryFilter});
     const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">(dashProps.dashFilter);
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
     const { user } = useContext(UserAuth);

@@ -17,6 +17,7 @@ import type {HelpRequest, User, Country} from "./data/data-model.ts";
 import {UserAuth} from "./context/userAuth.tsx";
 import {CountriesContext} from "./context/countries.tsx";
 import {Requests} from "./Requests.tsx";
+import type {ConflictType, UrgencyLevel} from "./data/types.ts";
 
 interface SessionData{
     username: string;
@@ -30,7 +31,11 @@ function App(){
     const [page, setPage] = useState("home");
     const [selectedRequest, setSelectedRequest] = useState<HelpRequest | null>(null);
     const [countries, setCountries] = useState<Country[]>([]);
+
+    // dashboard filters
     const [countryFilter, setCountryFilter] = useState<Country | "">("");
+    const [typeFilter, setTypeFilter] = useState<ConflictType | "">("");
+    const [urgencyFilter, setUrgencyFilter] = useState<UrgencyLevel | "">("");
 
     function checkConnection(){
         let valid = true;
@@ -85,21 +90,27 @@ function App(){
             mainContent = <Support setPage={setPage}/>
             break;
         case "explore":
-            mainContent = <Explore setPage={setPage} setCountryFilter={setCountryFilter}/>
+            mainContent = <Explore setPage={setPage} setCountryFilter={setCountryFilter}
+                setTypeFilter={setTypeFilter}
+                setUrgencyFilter={setUrgencyFilter}/>
             break;
         case "dashboard":
             mainContent = <Dashboard
                 setPage={setPage}
                 setSelectedRequest={setSelectedRequest}
                 dashFilter={"MIE"}
-                countryFilter={""}/>
+                countryFilter={""}
+                typeFilter={""}
+                urgencyFilter={""}/>
             break;
         case "dashboard*":
             mainContent = <Dashboard
                 setPage={setPage}
                 setSelectedRequest={setSelectedRequest}
                 dashFilter={"*"}
-                countryFilter={countryFilter}/>
+                countryFilter={countryFilter}
+                typeFilter={typeFilter}
+                urgencyFilter={urgencyFilter}/>
             break;
         case "requests":
             mainContent = <Requests></Requests>
