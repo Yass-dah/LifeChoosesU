@@ -32,8 +32,7 @@ export function Help({ request, setPage }: pageProps){
                     }));
                     setAnswer(data.answer);
                 }
-            })
-            .catch(err => console.log("Loading answer: " + err));
+            }).catch(err => console.log("Loading answer: " + err));
         return () => { valid = false };
     }
 
@@ -121,8 +120,7 @@ export function Help({ request, setPage }: pageProps){
                 <div className="field mt-4">
                     <label className="label">Intervento / Suggerimento</label>
                     <div className="control">
-                        <textarea
-                            className="textarea"
+                        <textarea className="textarea"
                             placeholder="Scrivi un consiglio, una strategia o un intervento da effettuare/effettuatosi..."
                             value={answer || ""}
                             onChange={(e) => setAnswer(e.target.value)}

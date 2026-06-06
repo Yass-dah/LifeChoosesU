@@ -95,7 +95,8 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
                 <div className="column is-3">
                     <label className="label">Stato</label>
                     <div className="select is-fullwidth">
-                        <select onChange={ (e) =>
+                        <select value={modelFilter.status}
+                            onChange={ (e) =>
                             setModelFilter({type: modelFilter.type,
                                 urgency: modelFilter.urgency,
                                 status: e.target.value as ConflictStatus | "",
@@ -116,7 +117,7 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
                                 type: modelFilter.type,
                                 urgency: modelFilter.urgency,
                                 status: modelFilter.status,
-                                country: e.target.value as Country | ""
+                                country: countries.find(c => c.name === e.target.value) || ""
                             })
                         }
                     >
@@ -158,36 +159,36 @@ export function Dashboard(dashProps: dashProps) {
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
     const { user } = useContext(UserAuth);
 
-    function loadRequests() {
-        if(user === null) return;
+    useEffect(() => {
+        if (user === null) return;
         let valid = true;
-        fetch("http://localhost:8080/help-requests",{
-            credentials: "include"
-        }).then(res => res.json())
-            .then((data) => {
-                if(valid)
-                    setRequests(data)
-            })
-            .catch(err => console.log("Loading requests: " + err));
-        return () => { valid = false };
-    }
 
-    function loadMyRequests(){
-        if(user === null) return;
-        let valid = true;
-        fetch(`http://localhost:8080/mediator/${user.username}`,{
-            credentials: "include"
-        }).then(res => res.json())
-            .then((data) => {
-                if(valid)
-                    setRequests(data)
-            })
-            .catch(err => console.log("Loading my requests: " + err));
-        return () => { valid = false };
-    }
+        const loadRequests = () => {
+            fetch("http://localhost:8080/help-requests", {
+                credentials: "include"
+            }).then(res => res.json())
+                .then((data) => {
+                    if (valid) setRequests(data);
+                }).catch(err => console.log("Loading requests: " + err));
+        };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => (dashFilter === "MIE") ? loadMyRequests() : loadRequests(), [dashFilter, user]);
+        const loadMyRequests = () => {
+            fetch(`http://localhost:8080/mediator/${user.username}`, {
+                credentials: "include"
+            }).then(res => res.json())
+                .then((data) => {
+                    if (valid) setRequests(data);
+                }).catch(err => console.log("Loading my requests: " + err));
+        };
+
+        if (dashFilter === "MIE") {
+            loadMyRequests();
+        } else {
+            loadRequests();
+        }
+
+        return () => { valid = false };
+    }, [dashFilter, user]);
 
     if(user === null || user.role !== "MEDIATORE")
         return (<p className="mt-4 has-text-centered">UNAUTHORIZED</p>)

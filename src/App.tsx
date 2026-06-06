@@ -56,7 +56,7 @@ function App(){
         return () => { valid = false;};
     }
 
-    useEffect(() => { checkConnection() }, []);
+    useEffect(() => checkConnection(), []);
 
     useEffect(() => {
         fetch("http://localhost:8080/help-requests/countries", {

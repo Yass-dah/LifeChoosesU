@@ -19,8 +19,13 @@ export function Support({setPage}: pageProps) {
     const [description, setDescription] = useState("");
     const [country, setCountry] = useState<string>("Italia");
     const [anonymous, setAnonymous] = useState(false);
+    const [error, setError] = useState<string | null>("");
 
     function submitRequest() {
+        if (!title || !location || !description) {
+            setError("Compila tutti i campi");
+            return;
+        }
         fetch("http://localhost:8080/hr/new", {
             method: "POST",
             headers: {
@@ -54,13 +59,11 @@ export function Support({setPage}: pageProps) {
                 </h1>
                 <div className="field">
                     <label className="label">Titolo</label>
-                    <input
-                        className="input"
+                    <input className="input"
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Es. Problema familiare"
-                    required/>
+                        placeholder="Es. Problema familiare"/>
                 </div>
                 <div className="field">
                     <label className="label">Tipo di conflitto</label>
@@ -103,8 +106,7 @@ export function Support({setPage}: pageProps) {
                         type="text"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        placeholder="Es. Torino"
-                    required/>
+                        placeholder="Es. Torino"/>
                 </div>
                 <div className="field">
                     <label className="label">Descrizione</label>
@@ -112,8 +114,7 @@ export function Support({setPage}: pageProps) {
                         className="textarea"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Descrivi il conflitto..."
-                    required/>
+                        placeholder="Descrivi il conflitto..."/>
                 </div>
                 <div className="field">
                     <label className="checkbox">
@@ -124,6 +125,8 @@ export function Support({setPage}: pageProps) {
                         /> Invia in forma anonima
                     </label>
                 </div>
+                <p className= {error ? "has-text-danger has-text-centered mt-3 mb-3 is-size-7" :
+                    "has-text-success has-text-centered mt-3 mb-3 is-size-6"}>{ error }</p>
                 <button
                     className="button is-dark is-fullwidth"
                     onClick={submitRequest}>

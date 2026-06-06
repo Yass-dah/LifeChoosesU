@@ -16,13 +16,9 @@ type pageProps = {
     setUrgencyFilter: (filter: UrgencyLevel | "") => void;
 }
 
-type groupProp = {
-    setGroup: (group: categories) => void
-}
-
-function FilterBox(setter: groupProp){
+function FilterBox({ setGroup }: {setGroup: (group: categories) => void}){
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setter.setGroup(e.target.value as categories);
+        setGroup(e.target.value as categories);
     };
 
     return (
@@ -153,14 +149,14 @@ function getCards(countries: Country[], category: categories, setter: pageProps)
         mainContent;
 }
 
-export function Explore(setter: pageProps){
+export function Explore({ pageProps }: {pageProps: pageProps}){
     const { countries } = useContext(CountriesContext);
     const [group, setGroup] = useState<categories>("country");
     return (
         <div className="explore-container container mt-5">
             <FilterBox setGroup={ setGroup }/>
             <div className="columns is-multiline">
-                { getCards(countries, group, setter) }
+                { getCards(countries, group, pageProps) }
             </div>
         </div>
     )
