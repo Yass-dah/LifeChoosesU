@@ -149,7 +149,8 @@ function getCards(countries: Country[], category: categories, setter: pageProps)
         mainContent.push(<UrgencyCard key={17} urgency={"MEDIA"} setter={setter} />)
         mainContent.push(<UrgencyCard key={18} urgency={"BASSA"} setter={setter} />);
     }
-    return mainContent;
+    return mainContent.length == 0 ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessuna categoria disponibile</p> :
+        mainContent;
 }
 
 export function Explore(setter: pageProps){
