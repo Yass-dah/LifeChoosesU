@@ -90,9 +90,11 @@ function App(){
             mainContent = <Support setPage={setPage}/>
             break;
         case "explore":
-            mainContent = <Explore setPage={setPage} setCountryFilter={setCountryFilter}
-                setTypeFilter={setTypeFilter}
-                setUrgencyFilter={setUrgencyFilter}/>
+            mainContent = <Explore pageProps={{
+                setPage,
+                setCountryFilter,
+                setTypeFilter,
+                setUrgencyFilter}}/>
             break;
         case "dashboard":
             mainContent = <Dashboard

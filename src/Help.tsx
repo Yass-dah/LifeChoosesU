@@ -90,8 +90,8 @@ export function Help({ request, setPage }: pageProps){
         <div className="container mt-5">
             <div className="box">
                 <p>{"ID: " + request.id }</p>
-                <h1 className="title is-size-4">{currentRequest.title + " from: " +
-                    ((currentRequest.anonymous) ? "anonymous" : currentRequest.requester)}</h1>
+                <h1 className="title is-size-4">{ currentRequest.title + " | " }
+                    <span className="is-size-4 is-italic">{((currentRequest.anonymous) ? "anonymous" : currentRequest.requester)}</span></h1>
                 <span className="tag is-danger mb-3">{currentRequest.urgency} URGENZA</span>
                 <p><strong>Luogo:</strong> {currentRequest.location + ", " + currentRequest.country}
                 <span className="is-size-7 is-italic has-text-danger"> (sos num:

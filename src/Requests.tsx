@@ -78,7 +78,7 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
                 className="is-black"
                 type="checkbox"
                 checked={ currentRequest.anonymous }
-                onClick={() => setAnonymous(!currentRequest.anonymous)}
+                onChange={() => setAnonymous(!currentRequest.anonymous)}
             />
             <span className="ml-2 is-italic is-size-7">ANONIMA</span>
             </label>
