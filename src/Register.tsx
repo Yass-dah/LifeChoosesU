@@ -42,6 +42,7 @@ export function Register(setter: permissionProps) {
         }
         fetch("http://localhost:8080/session/register", {
             method: "POST",
+            credentials: "include",
             headers: {
                 "Content-Type": "application/json"
             },
