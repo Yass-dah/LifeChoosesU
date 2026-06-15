@@ -51,8 +51,10 @@ function App(){
                             role: sd.role as 'MEDIATORE' | 'RICHIEDENTE'}
                         : null);
                 }
-            })
-            .catch(err => console.log("Checking conn: " + err));
+            }).catch(err => {
+                setPage("error");
+                console.log("Checking conn: " + err)
+            });
         return () => { valid = false;};
     }
 
@@ -117,6 +119,12 @@ function App(){
         case "requests":
             mainContent = <Requests></Requests>
             break;
+        case "error":
+            mainContent = <p className="box title m-6 has-text-centered">
+                SERVER TEMPORARILY UNAVAILABLE :(<br/>
+                <span className="is-size-5">Please try again later</span>
+            </p>
+            break;
         default:
             mainContent = <></>;
             break;
@@ -127,10 +135,10 @@ function App(){
             <UserAuth.Provider value={{ user, setUser }}>
                 <CountriesContext.Provider value={{ countries, setCountries }}>
                     <div id="app">
-                        <Navbar page={page} setPage={setPage}/>
+                        { page !== "error" && <Navbar page={page} setPage={setPage}/> }
                         { mainContent }
-                        { page === "home" ? <Steps /> : null}
-                        <Footer />
+                        { page === "home" ? <Steps /> : null }
+                        { page !== "error" && <Footer /> }
                     </div>
                 </CountriesContext.Provider>
             </UserAuth.Provider>
