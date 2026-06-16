@@ -1,5 +1,5 @@
 # LifeChoseesU App - Frontend
-#### LifeChoosesU is a humanitarian single page Web application made with react (typescript template).
+#### LifeChoosesU is a humanitarian single page Web application made with react (typescript template) that works with [server side one](https://github.com/Yass-dah/LifeChoseesU---BackEnd/tree/main)
 #### Users can ask for support(anonymously eventually) for an emergency and a mediator will be there for help
 
 <hr/>
