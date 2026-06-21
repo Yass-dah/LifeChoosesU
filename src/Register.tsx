@@ -73,6 +73,7 @@ export function Register(setter: permissionProps) {
                            type="text"
                            value={username}
                            placeholder="Username"
+                           defaultValue={""}
                            onChange={(e) => setUsername(e.target.value)}/>
                 </div>
                 <div className={result || role === "RICHIEDENTE" ? "field is-hidden" : "field"}>
@@ -96,6 +97,7 @@ export function Register(setter: permissionProps) {
                            type="email"
                            placeholder="Email"
                            value={email}
+                           defaultValue={""}
                            onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <div className={result ? "field is-hidden" : "field"}>
@@ -104,6 +106,7 @@ export function Register(setter: permissionProps) {
                            type="password"
                            value={password}
                            placeholder="Password"
+                           defaultValue={""}
                            onChange={(e) => setPassword(e.target.value)}/>
                 </div>
                 <div className={result ? "field is-hidden" : "field"}>
@@ -111,6 +114,7 @@ export function Register(setter: permissionProps) {
                     <input className="input"
                            type="password"
                            value={confirm}
+                           defaultValue={""}
                            placeholder="Ripeti password"
                            onChange={(e) => setConfirm(e.target.value)}/>
                 </div>

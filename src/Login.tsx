@@ -67,6 +67,7 @@ export function Login(setter: permissionProps){
                     <label className="label">Username</label>
                     <div className="control">
                         <input className="input" type="text" placeholder="Inserisci username"
+                               defaultValue={""}
                                onChange={ (e) => setUsername(e.target.value) }/>
                     </div>
                 </div>
@@ -74,6 +75,7 @@ export function Login(setter: permissionProps){
                     <label className="label">Password</label>
                     <div className="control">
                         <input className="input" type="password" placeholder="Inserisci password"
+                               defaultValue={""}
                             onChange={ (e) => setPassword(e.target.value) }/>
                     </div>
                 </div>
