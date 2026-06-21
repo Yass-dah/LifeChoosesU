@@ -164,7 +164,7 @@ export function Dashboard(dashProps: dashProps) {
         let valid = true;
 
         const loadRequests = () => {
-            fetch("http://localhost:8080/help-requests", {
+            fetch("https://lifechoseesu-backend-5.onrender.com/help-requests", {
                 credentials: "include"
             }).then(res => res.json())
                 .then((data) => {
@@ -173,7 +173,7 @@ export function Dashboard(dashProps: dashProps) {
         };
 
         const loadMyRequests = () => {
-            fetch(`http://localhost:8080/mediator/${user.username}`, {
+            fetch(`https://lifechoseesu-backend-5.onrender.com/mediator/${user.username}`, {
                 credentials: "include"
             }).then(res => res.json())
                 .then((data) => {

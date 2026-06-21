@@ -19,7 +19,7 @@ export function Help({ request, setPage }: pageProps){
 
     function loadAnswer() {
         let valid = true;
-        fetch(`http://localhost:8080/hr/${currentRequest.id}/response`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/hr/${currentRequest.id}/response`, {
             credentials: "include"
         }).then(res => {
                 if(res.ok)
@@ -39,7 +39,7 @@ export function Help({ request, setPage }: pageProps){
     useEffect(loadAnswer, [currentRequest.id]);
 
     function handleSubmit() {
-        fetch(`http://localhost:8080/hr/${currentRequest.id}/answer`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/hr/${currentRequest.id}/answer`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -59,7 +59,7 @@ export function Help({ request, setPage }: pageProps){
     }
 
     function takeInCharge() {
-        fetch(`http://localhost:8080/hr/${currentRequest.id}/assign`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/hr/${currentRequest.id}/assign`, {
             credentials: "include"
         }).then(res => {
             if(!res.ok) throw new Error("Errore presa in carico");
@@ -71,7 +71,7 @@ export function Help({ request, setPage }: pageProps){
     }
 
     function markResolved() {
-        fetch(`http://localhost:8080/hr/${currentRequest.id}/resolve`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/hr/${currentRequest.id}/resolve`, {
             credentials: "include",
         }).then(res => {
             if(!res.ok) throw new Error("Errore risoluzione");

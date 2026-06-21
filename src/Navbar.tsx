@@ -11,7 +11,7 @@ export function Navbar(setter: pageProps) {
     const { user , setUser } = useContext(UserAuth);
 
     function handleLogout() {
-        fetch(`http://localhost:8080/session/logout`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/session/logout`, {
             credentials: "include"
         }).then(res => res.json())
             .then((sd) => {

@@ -20,7 +20,7 @@ export function Login(setter: permissionProps){
             setError("Compila tutti i campi");
             return;
         }
-        fetch(`http://localhost:8080/session/login`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/session/login`, {
             method: "POST",
             credentials: "include",
             headers: {

@@ -26,7 +26,7 @@ export function Support({setPage}: pageProps) {
             setError("Compila tutti i campi");
             return;
         }
-        fetch("http://localhost:8080/hr/new", {
+        fetch("https://lifechoseesu-backend-5.onrender.com/hr/new", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

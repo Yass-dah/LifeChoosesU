@@ -40,7 +40,7 @@ export function Register(setter: permissionProps) {
             setError("Le password non coincidono");
             return;
         }
-        fetch("http://localhost:8080/session/register", {
+        fetch("https://lifechoseesu-backend-5.onrender.com/session/register", {
             method: "POST",
             credentials: "include",
             headers: {

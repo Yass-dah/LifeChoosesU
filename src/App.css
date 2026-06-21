@@ -144,7 +144,16 @@ footer {
   padding: 20px;
   background-color: #cee1ba;
   margin-top: 40px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
   font-size: 0.9em;
+}
+.container{
+  margin-bottom: 75px;
+}
+.register-container{
+  margin-bottom: 75px;
 }
 
 input[type=checkbox] {

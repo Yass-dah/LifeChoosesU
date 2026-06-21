@@ -13,7 +13,7 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
 
     function loadAnswer() {
         let valid = true;
-        fetch(`http://localhost:8080/hr/${currentRequest.id}/response`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/hr/${currentRequest.id}/response`, {
             credentials: "include"
         }).then(res => {
             if (!res.ok) throw new Error("Errore");
@@ -32,7 +32,7 @@ function RequestCard({request, onDelete}: { request: HelpRequest, onDelete: (id:
 
     function setAnonymous(flag: boolean) {
         let valid = true;
-        fetch(`http://localhost:8080/hr/${currentRequest.id}/anonymous/${flag}`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/hr/${currentRequest.id}/anonymous/${flag}`, {
             credentials: "include"
         }).then(res => {
             if (!res.ok) throw new Error("Errore");
@@ -94,7 +94,7 @@ export function Requests() {
     function loadMyRequests() {
         if(user === null) return;
         let valid = true;
-        fetch(`http://localhost:8080/requester/${user.username}`,{
+        fetch(`https://lifechoseesu-backend-5.onrender.com/requester/${user.username}`,{
             credentials: "include"
         }).then(res => res.json())
             .then((data) => {
@@ -105,7 +105,7 @@ export function Requests() {
     }
 
     function deleteRequest(id: number) {
-        fetch(`http://localhost:8080/hr/${id}/delete`, {
+        fetch(`https://lifechoseesu-backend-5.onrender.com/hr/${id}/delete`, {
             method: "DELETE",
             credentials: "include"
         }).then(res => {

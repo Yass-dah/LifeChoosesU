@@ -39,7 +39,7 @@ function App(){
 
     function checkConnection(){
         let valid = true;
-        fetch('http://localhost:8080/session/get', {
+        fetch('https://lifechoseesu-backend-5.onrender.com/session/get', {
             credentials: 'include'
         }).then(res => res.json())
             .then((sd: SessionData) => {
@@ -61,7 +61,7 @@ function App(){
     useEffect(() => checkConnection(), []);
 
     useEffect(() => {
-        fetch("http://localhost:8080/help-requests/countries", {
+        fetch("https://lifechoseesu-backend-5.onrender.com/help-requests/countries", {
             credentials: "include"
         }).then(res => res.json())
             .then((data) => setCountries(data))
