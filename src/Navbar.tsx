@@ -32,7 +32,7 @@ export function Navbar(setter: pageProps) {
 
     return (
         <div className="navbar"><div className="is-flex is-align-items-center m-2" style={{ gap: "10px" }}>
-            <h1 className="is-size-6 m-0" onClick={() => setter.setPage("home")}>LifeChoosesU
+            <h1 className="title m-0" onClick={() => setter.setPage("home")}>LifeChoosesU
             </h1>{user && (<span className="tag is-rounded is-italic is-white">
             {user.role === "MEDIATORE" ? "MEDIATOR AREA" : "HELP AREA"}</span>)}
         </div>
