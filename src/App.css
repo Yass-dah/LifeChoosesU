@@ -44,12 +44,15 @@
 
   .nav-buttons {
     display: flex;
+    justify-content: center;
     flex-wrap: nowrap;
     overflow-x: auto;
     gap: 8px;
-    width: 100%;
-    justify-content: flex-start;
-    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-buttons .button {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
 
