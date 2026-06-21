@@ -200,6 +200,9 @@ footer {
     padding-top: 20px;
     align-items: flex-start;
   }
+  .step-card {
+    margin-bottom: 10vh;
+  }
 }
 
 input[type=checkbox] {
