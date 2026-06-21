@@ -200,7 +200,7 @@ export function Dashboard(dashProps: dashProps) {
         (modelFilter.country === "" || modelFilter.country.name === req.country as never)
     );
     return (
-        <div className="container mt-5">
+        <div className="dashboard-container container mt-5">
             <FilterBox dashFilter={dashFilter} setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
             <h1 className="title ml-1">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">

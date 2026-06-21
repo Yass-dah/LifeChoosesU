@@ -219,6 +219,9 @@ footer {
   .container{
     margin-bottom: 85px;
   }
+  .dashboard-container{
+    margin-bottom: 95px;
+  }
 }
 
 input[type=checkbox] {
