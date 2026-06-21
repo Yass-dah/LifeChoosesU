@@ -37,12 +37,6 @@
     gap: 12px;
   }
 
-  .navbar .is-flex {
-    flex-direction: column;
-    text-align: center;
-    gap: 5px !important;
-  }
-
   .navbar .nav-buttons {
     width: 100%;
     display: flex;

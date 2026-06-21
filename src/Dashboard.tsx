@@ -54,7 +54,7 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
     setModelFilter: (value: modelFilter) => void}) {
     const { countries } = useContext(CountriesContext);
     return (
-        <div className="box mb-4">
+        <div className="filter-box box mb-4">
             <div className="columns is-multiline">
                 <div className="column is-3">
                     <label className="label">Tipo</label>
