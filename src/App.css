@@ -200,8 +200,11 @@ footer {
     padding-top: 20px;
     align-items: flex-start;
   }
-  .step-card {
+  .steps{
     margin-bottom: 8vh;
+  }
+  .container{
+    margin-bottom: 85px;
   }
 }
 
