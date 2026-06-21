@@ -149,14 +149,13 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
         </div>
     )
 }
-
 export function Dashboard(dashProps: dashProps) {
     const [ modelFilter, setModelFilter ] = useState<modelFilter>({type: dashProps.typeFilter,
         urgency: dashProps.urgencyFilter,
         status: "",
         country: dashProps.countryFilter});
     const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">(dashProps.dashFilter);
-    const [ requests, setRequests ] = useState<HelpRequest[]>([]);
+    const [ requests, setRequests ] = useState<HelpRequest[]>([]); // Inizializzato correttamente a []
     const { user } = useContext(UserAuth);
 
     useEffect(() => {
@@ -168,8 +167,12 @@ export function Dashboard(dashProps: dashProps) {
                 credentials: "include"
             }).then(res => res.json())
                 .then((data) => {
-                    if (valid) setRequests(data);
-                }).catch(err => console.log("Loading requests: " + err));
+                    // SICUREZZA: Controlla se i dati ricevuti sono effettivamente un array
+                    if (valid) setRequests(Array.isArray(data) ? data : []);
+                }).catch(err => {
+                console.log("Loading requests: " + err);
+                if (valid) setRequests([]); // Fallback in caso di errore di rete
+            });
         };
 
         const loadMyRequests = () => {
@@ -177,8 +180,12 @@ export function Dashboard(dashProps: dashProps) {
                 credentials: "include"
             }).then(res => res.json())
                 .then((data) => {
-                    if (valid) setRequests(data);
-                }).catch(err => console.log("Loading my requests: " + err));
+                    // SICUREZZA: Controlla se i dati ricevuti sono effettivamente un array
+                    if (valid) setRequests(Array.isArray(data) ? data : []);
+                }).catch(err => {
+                console.log("Loading my requests: " + err);
+                if (valid) setRequests([]); // Fallback in caso di errore di rete
+            });
         };
 
         if (dashFilter === "MIE") {
@@ -193,12 +200,16 @@ export function Dashboard(dashProps: dashProps) {
     if(user === null || user.role !== "MEDIATORE")
         return (<p className="mt-4 has-text-centered">UNAUTHORIZED</p>)
 
-    const filteredRequests = requests.filter(req =>
+    // SICUREZZA: Se per qualsiasi motivo 'requests' non è un array, usa un array vuoto [] per evitare il crash
+    const safeRequests = Array.isArray(requests) ? requests : [];
+
+    const filteredRequests = safeRequests.filter(req =>
         (modelFilter.type === "" || modelFilter.type === req.type) &&
         (modelFilter.urgency === "" || modelFilter.urgency === req.urgency) &&
         (modelFilter.status === "" || modelFilter.status === req.status) &&
         (modelFilter.country === "" || modelFilter.country.name === req.country as never)
     );
+
     return (
         <div className="dashboard-container container mt-5">
             <FilterBox dashFilter={dashFilter} setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
