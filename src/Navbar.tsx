@@ -49,7 +49,8 @@ export function Navbar(setter: pageProps) {
                 {(user !== null && user.role === "MEDIATORE") && setter.page !== "dashboard" && setter.page !== "dashboard*" ?
                     <button className="button is-black mx-4"
                             onClick={() => setter.setPage("dashboard")}>La mia dashboard</button> : null}
-                { (setter.page !== "login" && setter.page !== "register") && (
+                { (setter.page !== "loginM" && setter.page !=="loginR"
+                    && setter.page !== "registerM" && setter.page !== "registerR") && (
                     <div className="is-flex is-flex-direction-column is-align-items-center mx-0">
                         {user && (
                             <div className="box has-background-light px-2 py-0 mb-1 is-rounded is-size-7 is-flex is-align-items-center">
