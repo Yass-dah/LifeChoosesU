@@ -202,11 +202,11 @@ export function Dashboard(dashProps: dashProps) {
     return (
         <div className="container mt-5">
             <FilterBox dashFilter={dashFilter} setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
-            <h1 className="title">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
+            <h1 className="title ml-1">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">
                 { !filteredRequests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
                 { filteredRequests.map(req => (
-                    <div className="column is-half" key={req.id}>
+                    <div className="column is-half mb-4" key={req.id}>
                         <ConflictCard request={req} dashProps={dashProps}/>
                     </div>
                 ))}
