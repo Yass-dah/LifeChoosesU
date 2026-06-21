@@ -45,19 +45,19 @@ export function Navbar(setter: pageProps) {
 
             <div className="nav-buttons">
                 { setter.page !== "home" ?
-                    <button className="button is-warning"
+                    <button className="button is-warning mr-2"
                             onClick={() => setter.setPage("home")}>Home</button> : null }
 
                 {(user !== null && user.role === "RICHIEDENTE") && setter.page !== "support" ?
-                    <button className="button is-success is-light"
+                    <button className="button is-success is-light mr-2"
                             onClick={() => setter.setPage("support")}>+ Nuova richiesta</button> : null}
 
                 {(user !== null && user.role === "RICHIEDENTE") && setter.page !== "requests" ?
-                    <button className="button is-primary is-dark"
+                    <button className="button is-primary is-dark mr-2"
                             onClick={() => setter.setPage("requests")}>Le mie richieste</button> : null}
 
                 {(user !== null && user.role === "MEDIATORE") && setter.page !== "dashboard" && setter.page !== "dashboard*" ?
-                    <button className="button is-black"
+                    <button className="button is-black mr-2"
                             onClick={() => setter.setPage("dashboard")}>La mia dashboard</button> : null}
 
                 { (setter.page !== "loginM" && setter.page !=="loginR"
