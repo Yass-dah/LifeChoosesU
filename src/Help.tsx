@@ -87,7 +87,7 @@ export function Help({ request, setPage }: pageProps){
         return (<p className="mt-4 has-text-centered">UNAUTHORIZED</p>)
 
     return (
-        <div className="container mt-5">
+        <div className="help-container container mt-5">
             <div className="box">
                 <p>{"ID: " + request.id }</p>
                 <h1 className="title is-size-4">{ currentRequest.title + " | " }

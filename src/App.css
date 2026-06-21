@@ -202,7 +202,9 @@ footer {
   .conflict-card,
   .country-card,
   .type-card,
-  .urgency-card {
+  .urgency-card,
+  .support-container,
+  .help-container{
     width: 92%;
     margin-left: auto;
     margin-right: auto;
