@@ -184,6 +184,7 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
+  .filter-box,
   .login-box,
   .register-box,
   .conflict-card,

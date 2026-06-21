@@ -22,7 +22,7 @@ function FilterBox({ setGroup }: {setGroup: (group: categories) => void}){
     };
 
     return (
-        <div className="box mb-4">
+        <div className="filter-box box mb-4">
             <div className="columns is-multiline">
                 <div className="column is-4">
                     <label className="label">Raggruppa per</label>
