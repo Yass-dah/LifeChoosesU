@@ -18,7 +18,7 @@
   background: #801e1e;
   display: flex;
   justify-content: space-between;
-  padding: 15px 30px;
+  padding: 15px 20px;
 }
 .navbar h1{
   cursor: pointer;
