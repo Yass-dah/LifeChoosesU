@@ -11,6 +11,17 @@ Technologies used:
 
 <hr/>
 
+Possible ameliorations:
+- onLoading status for fetches
+- Verification code for login/register
+- chat between mediator & requester
+- geospatial data
+- richer session data
+- richer user informations + form to modify them
+- more DTOs & data encapsulation in the BackEnd
+
+<hr/>
+
 ### Homepage:
 
 <img width="960" height="510" alt="Screenshot (4)" src="https://github.com/user-attachments/assets/3a64c867-fdc2-4966-92f7-57e0dd6fcdf8" />
