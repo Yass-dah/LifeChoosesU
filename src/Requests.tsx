@@ -122,7 +122,7 @@ export function Requests() {
             <h1 className="title">Le mie richieste</h1>
             <div>
                 { !requests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessuna richiesta disponibile</p> : null }
-                { requests.map(req => (
+                { requests.length > 0 && requests.map(req => (
                     <RequestCard key={req.id} request={req} onDelete={deleteRequest}/>
                 ))}
             </div>
