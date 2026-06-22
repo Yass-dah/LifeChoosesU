@@ -24,10 +24,10 @@ export function Navbar(setter: pageProps) {
 
     let mainContent: ReactElement;
     if(user === null)
-        mainContent = <button className="button is-black is-outlined"
+        mainContent = <button className="button is-warning"
                               onClick={() => setter.setPage("loginR")}>Login</button>;
     else
-        mainContent = <button className="button py-1 is-black is-outlined"
+        mainContent = <button className="button py-1 is-warning"
                               onClick={ handleLogout }>Logout</button>;
 
     return (
