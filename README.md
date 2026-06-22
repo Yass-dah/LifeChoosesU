@@ -18,6 +18,7 @@ Possible ameliorations:
 - geospatial data
 - richer session data
 - richer user informations + form to modify them
+- more DTOs & data encapsulation in the BackEnd
 
 <hr/>
 
