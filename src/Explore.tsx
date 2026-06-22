@@ -129,7 +129,7 @@ function UrgencyCard({urgency, setter}: { urgency: UrgencyLevel, setter: pagePro
 
 function getCards(countries: Country[], category: categories, setter: pageProps){
     const mainContent = [];
-    if(category === "country"){
+    if(category === "country" && countries.length > 0){
         countries.sort((a, b) => b.conflictQt - a.conflictQt).map((c) =>
             mainContent.push(<CountryCard key={c.name} country={c} setter={setter}/>));
     }

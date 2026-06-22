@@ -122,7 +122,7 @@ function FilterBox({ dashFilter, setFilter, modelFilter, setModelFilter }: {
                         }
                     >
                         <option value="">Tutti</option>
-                        {countries.map((c) => (
+                        {countries.length > 0 && countries.map((c) => (
                             <option key={c.name} value={c.name}>
                                 {c.name + " " + c.flag}
                             </option>

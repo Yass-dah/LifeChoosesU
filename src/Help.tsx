@@ -96,7 +96,7 @@ export function Help({ request, setPage }: pageProps){
                 <p><strong>Luogo:</strong> {currentRequest.location + ", " + currentRequest.country}
                 <span className="is-size-7 is-italic has-text-danger"> (sos num:
                     <span className="is-bold has-text-danger">📞  
-                        { countries.find(c => c.name === currentRequest.country as never)?.emergencyNumber })
+                        { countries.length > 0 && countries.find(c => c.name === currentRequest.country as never)?.emergencyNumber })
                     </span>
                 </span>
                     <a className="ml-2 is-size-7" href={"https://www.google.com/maps/search/?api=1&query=" +

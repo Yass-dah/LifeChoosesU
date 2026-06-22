@@ -91,7 +91,7 @@ export function Support({setPage}: pageProps) {
                     <label className="label">Paese</label>
                     <div className="select is-fullwidth">
                         <select value={country} onChange={(e) => setCountry(e.target.value)}>
-                            {countries.map((c) => (
+                            {countries.length > 0 && countries.map((c) => (
                                 <option key={c.name} value={c.name}>
                                     {c.name + " " + c.flag}
                                 </option>

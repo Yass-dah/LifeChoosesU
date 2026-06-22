@@ -83,7 +83,7 @@ export function Register(setter: permissionProps) {
                                 onChange={ (e) =>
                                     setCountry(e.target.value)
                                 }>
-                            {countries.map((c) => (
+                            { countries.length > 0 && countries.map((c) => (
                                 <option key={c.name} value={c.name}>
                                     {c.name + " " + c.flag}
                                 </option>
