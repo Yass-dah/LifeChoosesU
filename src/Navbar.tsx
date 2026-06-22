@@ -67,9 +67,10 @@ export function Navbar(setter: pageProps) {
                             <div className="box has-background-light px-2 py-0 mb-1 is-rounded is-size-7 is-flex is-align-items-center">
                                 <img className="image is-16x16 mr-2" src="/user.png" alt=""/>
                                 <strong className="has-text-black">{user.username}</strong>
+                                {mainContent}
                             </div>
                         )}
-                        {mainContent}
+                        {!user && mainContent}
                     </div>
                 )}
             </div>
