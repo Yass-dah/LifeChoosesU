@@ -24,10 +24,10 @@ export function Navbar(setter: pageProps) {
 
     let mainContent: ReactElement;
     if(user === null)
-        mainContent = <button className="button has-text-black is-outlined"
+        mainContent = <button className="button is-black is-outlined"
                               onClick={() => setter.setPage("loginR")}>Login</button>;
     else
-        mainContent = <button className="button py-1 has-text-black is-outlined"
+        mainContent = <button className="button py-1 is-black is-outlined"
                               onClick={ handleLogout }>Logout</button>;
 
     return (
@@ -66,7 +66,7 @@ export function Navbar(setter: pageProps) {
                         {user && (
                             <div className="box has-background-light px-2 py-0 mb-1 is-rounded is-size-7 is-flex is-align-items-center">
                                 <img className="image is-16x16 mr-2" src="/user.png" alt=""/>
-                                <strong className="has-text-black">{user.username}</strong><br>
+                                <strong className="has-text-black">{user.username}</strong><br/>
                                 {mainContent}
                             </div>
                         )}
