@@ -157,9 +157,17 @@ export function Explore({ pageProps }: {pageProps: pageProps}){
         <div className="explore-container container mt-5">
             <FilterBox setGroup={ setGroup }/>
             <div className="columns is-multiline">
-                { pageProps.countriesLoading ? <div className="button is-loading m-2">
-
-                </div> : getCards(countries, group, pageProps) }
+                { pageProps.countriesLoading ? <div className="column is-half">
+                    <div className="country-card box">
+                        <div className="country-content">
+                            <div className="country-info">
+                                <h2 className="title is-5 mb-1">Loading countries...</h2>
+                                <button className="button is-light mt-3 is-loading"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    : getCards(countries, group, pageProps) }
             </div>
         </div>
     )
