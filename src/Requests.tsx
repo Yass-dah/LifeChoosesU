@@ -90,17 +90,20 @@ export function Requests() {
     const { user } = useContext(UserAuth);
 
     const [ requests, setRequests ] = useState<HelpRequest[]>([])
+    const [ loading, setLoading ] = useState<boolean>(false);
 
     function loadMyRequests() {
         if(user === null) return;
         let valid = true;
+        setLoading(true);
         fetch(`https://lifechoseesu-backend-5.onrender.com/requester/${user.username}`,{
             credentials: "include"
         }).then(res => res.json())
             .then((data) => {
                 if(valid)
                     setRequests(data)
-            }).catch(err => console.log("Loading requests: " + err));
+            }).catch(err => console.log("Loading requests: " + err))
+            .finally(() => setLoading(false));
         return () => { valid = false };
     }
 
@@ -121,7 +124,12 @@ export function Requests() {
         <div className="container mt-5">
             <h1 className="title">Le mie richieste</h1>
             <div>
-                { !requests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessuna richiesta disponibile</p> : null }
+                { loading &&
+                <div className="box conflict-card urgent mb-4">
+                    <h3 className="title is-5">Loading requests...</h3>
+                    <button className="button is-link is-light mt-2 mr-3 is-loading"/>
+                </div>}
+                { !requests.length && !loading ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessuna richiesta disponibile</p> : null }
                 { requests.length > 0 && requests.map(req => (
                     <RequestCard key={req.id} request={req} onDelete={deleteRequest}/>
                 ))}

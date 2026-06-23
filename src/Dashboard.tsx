@@ -155,44 +155,35 @@ export function Dashboard(dashProps: dashProps) {
         status: "",
         country: dashProps.countryFilter});
     const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">(dashProps.dashFilter);
-    const [ requests, setRequests ] = useState<HelpRequest[]>([]); // Inizializzato correttamente a []
+    const [ requests, setRequests ] = useState<HelpRequest[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const { user } = useContext(UserAuth);
 
     useEffect(() => {
         if (user === null) return;
+
         let valid = true;
+        setLoading(true);
+        const url =
+            dashFilter === "MIE"
+                ? `https://lifechoseesu-backend-5.onrender.com/mediator/${user.username}`
+                : "https://lifechoseesu-backend-5.onrender.com/help-requests";
 
-        const loadRequests = () => {
-            fetch("https://lifechoseesu-backend-5.onrender.com/help-requests", {
-                credentials: "include"
-            }).then(res => res.json())
-                .then((data) => {
-                    // SICUREZZA: Controlla se i dati ricevuti sono effettivamente un array
-                    if (valid) setRequests(Array.isArray(data) ? data : []);
-                }).catch(err => {
+        fetch(url, { credentials: "include" })
+            .then(res => {
+                if (!res.ok) throw new Error("HTTP error");
+                return res.json();
+            })
+            .then((data) => {
+                if (valid) setRequests(Array.isArray(data) ? data : []);
+            })
+            .catch(err => {
                 console.log("Loading requests: " + err);
-                if (valid) setRequests([]); // Fallback in caso di errore di rete
+                if (valid) setRequests([]);
+            })
+            .finally(() => {
+                if (valid) setLoading(false);
             });
-        };
-
-        const loadMyRequests = () => {
-            fetch(`https://lifechoseesu-backend-5.onrender.com/mediator/${user.username}`, {
-                credentials: "include"
-            }).then(res => res.json())
-                .then((data) => {
-                    // SICUREZZA: Controlla se i dati ricevuti sono effettivamente un array
-                    if (valid) setRequests(Array.isArray(data) ? data : []);
-                }).catch(err => {
-                console.log("Loading my requests: " + err);
-                if (valid) setRequests([]); // Fallback in caso di errore di rete
-            });
-        };
-
-        if (dashFilter === "MIE") {
-            loadMyRequests();
-        } else {
-            loadRequests();
-        }
 
         return () => { valid = false };
     }, [dashFilter, user]);
@@ -215,7 +206,12 @@ export function Dashboard(dashProps: dashProps) {
             <FilterBox dashFilter={dashFilter} setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
             <h1 className="title ml-1">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">
-                { !filteredRequests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
+                { loading &&
+                <div className="box conflict-card">
+                    <h3 className="title is-5">Loading requests...</h3>
+                    <button className="button is-link is-light mt-3 is-loading"/>
+                </div>}
+                { !filteredRequests.length && !loading ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
                 { filteredRequests.map(req => (
                     <div className="column is-half mb-4" key={req.id}>
                         <ConflictCard request={req} dashProps={dashProps}/>

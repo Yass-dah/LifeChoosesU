@@ -14,12 +14,14 @@ export function Login(setter: permissionProps){
     const [ password, setPassword ] = useState("");
     const [ role, setRole ] = useState<"RICHIEDENTE" | "MEDIATORE">(setter.role);
     const [ error, setError ] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     function handleLogin() {
         if (!username || !password) {
             setError("Compila tutti i campi");
             return;
         }
+        setLoading(true);
         fetch(`https://lifechoseesu-backend-5.onrender.com/session/login`, {
             method: "POST",
             credentials: "include",
@@ -42,7 +44,8 @@ export function Login(setter: permissionProps){
                     });
                     setter.setPage("home");
                 } else setError(sd.message);
-            }).catch(err => console.log("Login: " + err));
+            }).catch(err => console.log("Login: " + err))
+            .finally(() => setLoading(false));
     }
 
     return (
@@ -81,7 +84,8 @@ export function Login(setter: permissionProps){
                 </div>
                 <div className="field mt-4">
                     <div className="control">
-                        <button className="button is-success is-fullwidth"
+                        <button className={loading ? "button is-success is-fullwidth is-loading" :
+                            "button is-success is-fullwidth"}
                             onClick={ handleLogin }>Accedi</button>
                     </div>
                 </div>

@@ -22,6 +22,7 @@ export function Register(setter: permissionProps) {
     const [confirm, setConfirm] = useState("");
     const [role, setRole] = useState<"RICHIEDENTE" | "MEDIATORE">(setter.role);
     const [error, setError] = useState<string | null>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     function handleRegister() {
         if (!username || !email || !password || !confirm) {
@@ -40,6 +41,7 @@ export function Register(setter: permissionProps) {
             setError("Le password non coincidono");
             return;
         }
+        setLoading(true);
         fetch("https://lifechoseesu-backend-5.onrender.com/session/register", {
             method: "POST",
             credentials: "include",
@@ -56,7 +58,8 @@ export function Register(setter: permissionProps) {
             if(res.ok) setResult(true);
             return res.text();
         }).then((data) => setError(data))
-            .catch(err => console.log("Register: " + err));
+            .catch(err => console.log("Register: " + err))
+            .finally(() => setLoading(false));
     }
 
     return (
@@ -133,7 +136,7 @@ export function Register(setter: permissionProps) {
                 <button
                     className={result ? "button is-primary is-fullwidth is-hidden" : "button is-primary is-fullwidth"}
                     onClick={handleRegister}>
-                    Registrati
+                    { loading ? "..." : "Registrati" }
                 </button>
                 <p className="has-text-centered mt-3">
                     { result ? null : "Hai già un account?" }
