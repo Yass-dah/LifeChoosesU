@@ -162,7 +162,7 @@ export function Explore({ pageProps }: {pageProps: pageProps}){
                         <div className="country-content">
                             <div className="country-info">
                                 <h2 className="title is-5 mb-1">Loading countries...</h2>
-                                <button className="button is-light mt-3 is-loading"/>
+                                <button className="button is-light p-3 mt-3 is-loading"/>
                             </div>
                         </div>
                     </div>
