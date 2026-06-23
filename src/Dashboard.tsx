@@ -156,19 +156,15 @@ export function Dashboard(dashProps: dashProps) {
         country: dashProps.countryFilter});
     const [ dashFilter, setDashFilter ] = useState<"*" | "MIE">(dashProps.dashFilter);
     const [ requests, setRequests ] = useState<HelpRequest[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
     const { user } = useContext(UserAuth);
 
     useEffect(() => {
         if (user === null) return;
-
         let valid = true;
-        setLoading(true);
         const url =
             dashFilter === "MIE"
                 ? `https://lifechoseesu-backend-5.onrender.com/mediator/${user.username}`
                 : "https://lifechoseesu-backend-5.onrender.com/help-requests";
-
         fetch(url, { credentials: "include" })
             .then(res => {
                 if (!res.ok) throw new Error("HTTP error");
@@ -181,10 +177,6 @@ export function Dashboard(dashProps: dashProps) {
                 console.log("Loading requests: " + err);
                 if (valid) setRequests([]);
             })
-            .finally(() => {
-                if (valid) setLoading(false);
-            });
-
         return () => { valid = false };
     }, [dashFilter, user]);
 
@@ -206,12 +198,7 @@ export function Dashboard(dashProps: dashProps) {
             <FilterBox dashFilter={dashFilter} setFilter={setDashFilter} modelFilter={modelFilter} setModelFilter={setModelFilter} />
             <h1 className="title ml-1">{ dashFilter === "*" ? "Esplora" : "La mia dashboard"}</h1>
             <div className="columns is-multiline">
-                { loading &&
-                <div className="box conflict-card">
-                    <h3 className="title is-5">Loading requests...</h3>
-                    <button className="button is-link is-light mt-3 is-loading"/>
-                </div>}
-                { !filteredRequests.length && !loading ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
+                { !filteredRequests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessun conflitto disponibile</p> : null }
                 { filteredRequests.map(req => (
                     <div className="column is-half mb-4" key={req.id}>
                         <ConflictCard request={req} dashProps={dashProps}/>
