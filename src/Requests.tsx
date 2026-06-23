@@ -119,7 +119,7 @@ export function Requests() {
 
     return (
         <div className="container mt-5">
-            <h1 className="title">Le mie richieste</h1>
+            <h1 className="title ml-1">Le mie richieste</h1>
             <div>
                 { !requests.length ? <p className="is-size-6 ml-4 mb-5 mt-5">Nessuna richiesta disponibile</p> : null }
                 { requests.length > 0 && requests.map(req => (
