@@ -10,6 +10,7 @@ import {CountriesContext} from "./context/countries.tsx";
 type categories = "country" | "type" | "urgency";
 
 type pageProps = {
+    countriesLoading: boolean;
     setPage: (page: string) => void;
     setCountryFilter: (filter: Country | "") => void;
     setTypeFilter: (filter: ConflictType | "") => void;
@@ -156,7 +157,9 @@ export function Explore({ pageProps }: {pageProps: pageProps}){
         <div className="explore-container container mt-5">
             <FilterBox setGroup={ setGroup }/>
             <div className="columns is-multiline">
-                { getCards(countries, group, pageProps) }
+                { pageProps.countriesLoading ? <div className="button is-loading is-light is-large">
+                    Loading countries...
+                </div> : getCards(countries, group, pageProps) }
             </div>
         </div>
     )

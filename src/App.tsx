@@ -31,6 +31,7 @@ function App(){
     const [page, setPage] = useState("home");
     const [selectedRequest, setSelectedRequest] = useState<HelpRequest | null>(null);
     const [countries, setCountries] = useState<Country[]>([]);
+    const [countriesLoading, setCountriesLoading] = useState<boolean>(true);
 
     // dashboard filters
     const [countryFilter, setCountryFilter] = useState<Country | "">("");
@@ -65,7 +66,8 @@ function App(){
             credentials: "include"
         }).then(res => res.json())
             .then((data) => setCountries(data))
-            .catch(err => console.log("Loading countries: " + err));
+            .catch(err => console.log("Loading countries: " + err))
+            .finally(() => setCountriesLoading(false));
     }, []);
 
     let mainContent: ReactElement;
@@ -93,6 +95,7 @@ function App(){
             break;
         case "explore":
             mainContent = <Explore pageProps={{
+                countriesLoading,
                 setPage,
                 setCountryFilter,
                 setTypeFilter,
